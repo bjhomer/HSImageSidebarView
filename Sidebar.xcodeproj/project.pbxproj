@@ -1,0 +1,472 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B7B80510129393C300EBE69D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B8050F129393C300EBE69D /* UIKit.framework */; };
+		B7B80512129393C300EBE69D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B80511129393C300EBE69D /* Foundation.framework */; };
+		B7B80514129393C300EBE69D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B80513129393C300EBE69D /* CoreGraphics.framework */; };
+		B7B80519129393C300EBE69D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B7B80517129393C300EBE69D /* InfoPlist.strings */; };
+		B7B8051B129393C400EBE69D /* Sidebar-main.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B8051A129393C400EBE69D /* Sidebar-main.m */; };
+		B7B8051E129393C400EBE69D /* SidebarAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B8051D129393C400EBE69D /* SidebarAppDelegate.m */; };
+		B7B80521129393C400EBE69D /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7B8051F129393C400EBE69D /* MainWindow.xib */; };
+		B7B80524129393C400EBE69D /* SidebarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B80523129393C400EBE69D /* SidebarViewController.m */; };
+		B7B80527129393C400EBE69D /* SidebarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7B80525129393C400EBE69D /* SidebarViewController.xib */; };
+		B7B8052F129393C400EBE69D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B8050F129393C300EBE69D /* UIKit.framework */; };
+		B7B80530129393C400EBE69D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B80511129393C300EBE69D /* Foundation.framework */; };
+		B7B80531129393C400EBE69D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B80513129393C300EBE69D /* CoreGraphics.framework */; };
+		B7B80535129393C400EBE69D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B7B80534129393C400EBE69D /* InfoPlist.strings */; };
+		B7B80537129393C400EBE69D /* SidebarTests.h in Resources */ = {isa = PBXBuildFile; fileRef = B7B80536129393C400EBE69D /* SidebarTests.h */; };
+		B7B80539129393C400EBE69D /* SidebarTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B80538129393C400EBE69D /* SidebarTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		B7B8050C129393C300EBE69D /* Sidebar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sidebar.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B7B8050F129393C300EBE69D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		B7B80511129393C300EBE69D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		B7B80513129393C300EBE69D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		B7B80515129393C300EBE69D /* Sidebar-Info.plist */ = {isa = PBXFileReference; path = "Sidebar-Info.plist"; sourceTree = "<group>"; };
+		B7B80516129393C300EBE69D /* Sidebar-Prefix.pch */ = {isa = PBXFileReference; path = "Sidebar-Prefix.pch"; sourceTree = "<group>"; };
+		B7B80518129393C300EBE69D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B7B8051A129393C400EBE69D /* Sidebar-main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Sidebar-main.m"; sourceTree = "<group>"; };
+		B7B8051C129393C400EBE69D /* SidebarAppDelegate.h */ = {isa = PBXFileReference; path = SidebarAppDelegate.h; sourceTree = "<group>"; };
+		B7B8051D129393C400EBE69D /* SidebarAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SidebarAppDelegate.m; sourceTree = "<group>"; };
+		B7B80520129393C400EBE69D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
+		B7B80522129393C400EBE69D /* SidebarViewController.h */ = {isa = PBXFileReference; path = SidebarViewController.h; sourceTree = "<group>"; };
+		B7B80523129393C400EBE69D /* SidebarViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SidebarViewController.m; sourceTree = "<group>"; };
+		B7B80526129393C400EBE69D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SidebarViewController.xib; sourceTree = "<group>"; };
+		B7B8052E129393C400EBE69D /* SidebarTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SidebarTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B7B80532129393C400EBE69D /* SidebarTests-Info.plist */ = {isa = PBXFileReference; path = "SidebarTests-Info.plist"; sourceTree = "<group>"; };
+		B7B80533129393C400EBE69D /* SidebarTests-Prefix.pch */ = {isa = PBXFileReference; path = "SidebarTests-Prefix.pch"; sourceTree = "<group>"; };
+		B7B80534129393C400EBE69D /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = en.lproj/SidebarTests/InfoPlist.strings; sourceTree = "<group>"; };
+		B7B80536129393C400EBE69D /* SidebarTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SidebarTests.h; sourceTree = "<group>"; };
+		B7B80538129393C400EBE69D /* SidebarTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SidebarTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B7B80509129393C300EBE69D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B7B80510129393C300EBE69D /* UIKit.framework in Frameworks */,
+				B7B80512129393C300EBE69D /* Foundation.framework in Frameworks */,
+				B7B80514129393C300EBE69D /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B7B8052A129393C400EBE69D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B7B8052F129393C400EBE69D /* UIKit.framework in Frameworks */,
+				B7B80530129393C400EBE69D /* Foundation.framework in Frameworks */,
+				B7B80531129393C400EBE69D /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B7B804FD129393C300EBE69D = {
+			isa = PBXGroup;
+			children = (
+				B7B80504129393C300EBE69D /* Classes */,
+				B7B80505129393C300EBE69D /* Other Sources */,
+				B7B80506129393C300EBE69D /* Resources */,
+				B7B80507129393C300EBE69D /* Frameworks */,
+				B7B8050D129393C300EBE69D /* Products */,
+				B7B80528129393C400EBE69D /* Tests */,
+			);
+			sourceTree = "<group>";
+		};
+		B7B80504129393C300EBE69D /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				B7B8051C129393C400EBE69D /* SidebarAppDelegate.h */,
+				B7B8051D129393C400EBE69D /* SidebarAppDelegate.m */,
+				B7B80522129393C400EBE69D /* SidebarViewController.h */,
+				B7B80523129393C400EBE69D /* SidebarViewController.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		B7B80505129393C300EBE69D /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				B7B80516129393C300EBE69D /* Sidebar-Prefix.pch */,
+				B7B8051A129393C400EBE69D /* Sidebar-main.m */,
+				B7B80533129393C400EBE69D /* SidebarTests-Prefix.pch */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		B7B80506129393C300EBE69D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B7B80515129393C300EBE69D /* Sidebar-Info.plist */,
+				B7B80517129393C300EBE69D /* InfoPlist.strings */,
+				B7B8051F129393C400EBE69D /* MainWindow.xib */,
+				B7B80525129393C400EBE69D /* SidebarViewController.xib */,
+				B7B80532129393C400EBE69D /* SidebarTests-Info.plist */,
+				B7B80534129393C400EBE69D /* InfoPlist.strings */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		B7B80507129393C300EBE69D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B7B8050F129393C300EBE69D /* UIKit.framework */,
+				B7B80511129393C300EBE69D /* Foundation.framework */,
+				B7B80513129393C300EBE69D /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B7B8050D129393C300EBE69D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B7B8050C129393C300EBE69D /* Sidebar.app */,
+				B7B8052E129393C400EBE69D /* SidebarTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B7B80528129393C400EBE69D /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				B7B80536129393C400EBE69D /* SidebarTests.h */,
+				B7B80538129393C400EBE69D /* SidebarTests.m */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B7B8050B129393C300EBE69D /* Sidebar */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B7B8053E129393C400EBE69D /* Build configuration list for PBXNativeTarget "Sidebar" */;
+			buildPhases = (
+				B7B80508129393C300EBE69D /* Sources */,
+				B7B80509129393C300EBE69D /* Frameworks */,
+				B7B8050A129393C300EBE69D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Sidebar;
+			productName = Sidebar;
+			productReference = B7B8050C129393C300EBE69D /* Sidebar.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B7B8052D129393C400EBE69D /* SidebarTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B7B80541129393C400EBE69D /* Build configuration list for PBXNativeTarget "SidebarTests" */;
+			buildPhases = (
+				B7B80529129393C400EBE69D /* Sources */,
+				B7B8052A129393C400EBE69D /* Frameworks */,
+				B7B8052B129393C400EBE69D /* Resources */,
+				B7B8052C129393C400EBE69D /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SidebarTests;
+			productName = SidebarTests;
+			productReference = B7B8052E129393C400EBE69D /* SidebarTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B7B804FF129393C300EBE69D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = "BJ Homer";
+			};
+			buildConfigurationList = B7B80502129393C300EBE69D /* Build configuration list for PBXProject "Sidebar" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = B7B804FD129393C300EBE69D;
+			productRefGroup = B7B8050D129393C300EBE69D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B7B8050B129393C300EBE69D /* Sidebar */,
+				B7B8052D129393C400EBE69D /* SidebarTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B7B8050A129393C300EBE69D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B7B80519129393C300EBE69D /* InfoPlist.strings in Resources */,
+				B7B80521129393C400EBE69D /* MainWindow.xib in Resources */,
+				B7B80527129393C400EBE69D /* SidebarViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B7B8052B129393C400EBE69D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B7B80535129393C400EBE69D /* InfoPlist.strings in Resources */,
+				B7B80537129393C400EBE69D /* SidebarTests.h in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B7B8052C129393C400EBE69D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B7B80508129393C300EBE69D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B7B8051B129393C400EBE69D /* Sidebar-main.m in Sources */,
+				B7B8051E129393C400EBE69D /* SidebarAppDelegate.m in Sources */,
+				B7B80524129393C400EBE69D /* SidebarViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B7B80529129393C400EBE69D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B7B80539129393C400EBE69D /* SidebarTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		B7B80517129393C300EBE69D /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B7B80518129393C300EBE69D /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		B7B8051F129393C400EBE69D /* MainWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B7B80520129393C400EBE69D /* en */,
+			);
+			name = MainWindow.xib;
+			sourceTree = "<group>";
+		};
+		B7B80525129393C400EBE69D /* SidebarViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B7B80526129393C400EBE69D /* en */,
+			);
+			name = SidebarViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		B7B8053A129393C400EBE69D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				PREBINDING = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		B7B8053B129393C400EBE69D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PREBINDING = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Release;
+		};
+		B7B8053C129393C400EBE69D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		B7B8053D129393C400EBE69D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		B7B8053F129393C400EBE69D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Sidebar-Prefix.pch";
+				INFOPLIST_FILE = "Sidebar-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		B7B80540129393C400EBE69D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Sidebar-Prefix.pch";
+				INFOPLIST_FILE = "Sidebar-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		B7B80542129393C400EBE69D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SidebarTests-Prefix.pch";
+				INFOPLIST_FILE = "SidebarTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SenTestingKit,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		B7B80543129393C400EBE69D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SidebarTests-Prefix.pch";
+				INFOPLIST_FILE = "SidebarTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SenTestingKit,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+		B7B80544129393C400EBE69D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = SidebarTests;
+			};
+			name = Debug;
+		};
+		B7B80545129393C400EBE69D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				PRODUCT_NAME = SidebarTests;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B7B80502129393C300EBE69D /* Build configuration list for PBXProject "Sidebar" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B7B8053A129393C400EBE69D /* Debug */,
+				B7B8053B129393C400EBE69D /* Release */,
+				B7B8053C129393C400EBE69D /* Debug */,
+				B7B8053D129393C400EBE69D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B7B8053E129393C400EBE69D /* Build configuration list for PBXNativeTarget "Sidebar" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B7B8053F129393C400EBE69D /* Debug */,
+				B7B80540129393C400EBE69D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B7B80541129393C400EBE69D /* Build configuration list for PBXNativeTarget "SidebarTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B7B80542129393C400EBE69D /* Debug */,
+				B7B80543129393C400EBE69D /* Release */,
+				B7B80544129393C400EBE69D /* Debug */,
+				B7B80545129393C400EBE69D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B7B804FF129393C300EBE69D /* Project object */;
+}
