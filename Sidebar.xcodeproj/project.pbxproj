@@ -22,6 +22,7 @@
 		B7B80535129393C400EBE69D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B7B80534129393C400EBE69D /* InfoPlist.strings */; };
 		B7B80537129393C400EBE69D /* SidebarTests.h in Resources */ = {isa = PBXBuildFile; fileRef = B7B80536129393C400EBE69D /* SidebarTests.h */; };
 		B7B80539129393C400EBE69D /* SidebarTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B80538129393C400EBE69D /* SidebarTests.m */; };
+		B7B80549129395F800EBE69D /* HSSidebarView.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B80548129395F800EBE69D /* HSSidebarView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,22 +30,24 @@
 		B7B8050F129393C300EBE69D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		B7B80511129393C300EBE69D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B7B80513129393C300EBE69D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		B7B80515129393C300EBE69D /* Sidebar-Info.plist */ = {isa = PBXFileReference; path = "Sidebar-Info.plist"; sourceTree = "<group>"; };
-		B7B80516129393C300EBE69D /* Sidebar-Prefix.pch */ = {isa = PBXFileReference; path = "Sidebar-Prefix.pch"; sourceTree = "<group>"; };
+		B7B80515129393C300EBE69D /* Sidebar-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Sidebar-Info.plist"; sourceTree = "<group>"; };
+		B7B80516129393C300EBE69D /* Sidebar-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sidebar-Prefix.pch"; sourceTree = "<group>"; };
 		B7B80518129393C300EBE69D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B7B8051A129393C400EBE69D /* Sidebar-main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Sidebar-main.m"; sourceTree = "<group>"; };
-		B7B8051C129393C400EBE69D /* SidebarAppDelegate.h */ = {isa = PBXFileReference; path = SidebarAppDelegate.h; sourceTree = "<group>"; };
+		B7B8051C129393C400EBE69D /* SidebarAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SidebarAppDelegate.h; sourceTree = "<group>"; };
 		B7B8051D129393C400EBE69D /* SidebarAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SidebarAppDelegate.m; sourceTree = "<group>"; };
 		B7B80520129393C400EBE69D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
-		B7B80522129393C400EBE69D /* SidebarViewController.h */ = {isa = PBXFileReference; path = SidebarViewController.h; sourceTree = "<group>"; };
+		B7B80522129393C400EBE69D /* SidebarViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SidebarViewController.h; sourceTree = "<group>"; };
 		B7B80523129393C400EBE69D /* SidebarViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SidebarViewController.m; sourceTree = "<group>"; };
 		B7B80526129393C400EBE69D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SidebarViewController.xib; sourceTree = "<group>"; };
 		B7B8052E129393C400EBE69D /* SidebarTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SidebarTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		B7B80532129393C400EBE69D /* SidebarTests-Info.plist */ = {isa = PBXFileReference; path = "SidebarTests-Info.plist"; sourceTree = "<group>"; };
-		B7B80533129393C400EBE69D /* SidebarTests-Prefix.pch */ = {isa = PBXFileReference; path = "SidebarTests-Prefix.pch"; sourceTree = "<group>"; };
+		B7B80532129393C400EBE69D /* SidebarTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SidebarTests-Info.plist"; sourceTree = "<group>"; };
+		B7B80533129393C400EBE69D /* SidebarTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SidebarTests-Prefix.pch"; sourceTree = "<group>"; };
 		B7B80534129393C400EBE69D /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = en.lproj/SidebarTests/InfoPlist.strings; sourceTree = "<group>"; };
 		B7B80536129393C400EBE69D /* SidebarTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SidebarTests.h; sourceTree = "<group>"; };
 		B7B80538129393C400EBE69D /* SidebarTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SidebarTests.m; sourceTree = "<group>"; };
+		B7B80547129395F800EBE69D /* HSSidebarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSSidebarView.h; sourceTree = "<group>"; };
+		B7B80548129395F800EBE69D /* HSSidebarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSSidebarView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +89,7 @@
 		B7B80504129393C300EBE69D /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				B7B80546129394EA00EBE69D /* HSSidebarView */,
 				B7B8051C129393C400EBE69D /* SidebarAppDelegate.h */,
 				B7B8051D129393C400EBE69D /* SidebarAppDelegate.m */,
 				B7B80522129393C400EBE69D /* SidebarViewController.h */,
@@ -143,6 +147,15 @@
 				B7B80538129393C400EBE69D /* SidebarTests.m */,
 			);
 			path = Tests;
+			sourceTree = "<group>";
+		};
+		B7B80546129394EA00EBE69D /* HSSidebarView */ = {
+			isa = PBXGroup;
+			children = (
+				B7B80547129395F800EBE69D /* HSSidebarView.h */,
+				B7B80548129395F800EBE69D /* HSSidebarView.m */,
+			);
+			name = HSSidebarView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -255,6 +268,7 @@
 				B7B8051B129393C400EBE69D /* Sidebar-main.m in Sources */,
 				B7B8051E129393C400EBE69D /* SidebarAppDelegate.m in Sources */,
 				B7B80524129393C400EBE69D /* SidebarViewController.m in Sources */,
+				B7B80549129395F800EBE69D /* HSSidebarView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
