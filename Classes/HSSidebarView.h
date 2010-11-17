@@ -7,9 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HSSidebarViewDelegate.h"
 
 
 @interface HSSidebarView : UIView {
 }
 
+@property (readonly) NSUInteger imageCount;
+
+@property (assign) id<HSSidebarViewDelegate> delegate;
+
+- (void)reloadData;
 @end

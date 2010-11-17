@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "HSSidebarView.h"
 
-@interface SidebarViewController : UIViewController {
-
+@interface SidebarViewController : UIViewController 
+<HSSidebarViewDelegate>
+{
     HSSidebarView *_sidebar;
 }
 @property (nonatomic, retain) IBOutlet HSSidebarView *sidebar;

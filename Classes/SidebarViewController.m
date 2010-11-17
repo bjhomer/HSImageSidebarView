@@ -30,12 +30,12 @@
 */
 
 
-/*
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
+	_sidebar.delegate = self;
 }
-*/
+
 
 
 // Ensure that the view controller supports rotation and that the split view can therefore show in both portrait and landscape.
@@ -54,6 +54,14 @@
 	// Release any retained subviews of the main view.
 	// e.g. self.myOutlet = nil;
     self.sidebar = nil;
+}
+
+-(NSUInteger)countOfImagesInSidebar:(HSSidebarView *)sidebar {
+	return 30;
+}
+
+-(UIImage *)sidebar:(HSSidebarView *)sidebar imageForIndex:(NSUInteger)anIndex {
+	return [UIImage imageWithContentsOfFile:@"/Users/bjhomer/Desktop/Rough SmileSwap Icon.png"];
 }
 
 
