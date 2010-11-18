@@ -13,10 +13,12 @@
 
 #pragma mark -
 #pragma mark Delegate methods
+@optional
 - (void)sidebar:(HSSidebarView *)sidebar didTapImageAtIndex:(NSUInteger)anIndex;
 
 #pragma mark -
 #pragma mark Data source methods
+@required
 - (NSUInteger)countOfImagesInSidebar:(HSSidebarView *)sidebar;
 - (UIImage *)sidebar:(HSSidebarView *)sidebar imageForIndex:(NSUInteger)anIndex;
 

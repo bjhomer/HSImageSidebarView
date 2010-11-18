@@ -17,5 +17,7 @@
 
 @property (assign) id<HSSidebarViewDelegate> delegate;
 
+@property NSInteger selectedIndex;
+
 - (void)reloadData;
 @end

@@ -23,6 +23,7 @@
 		B7B80537129393C400EBE69D /* SidebarTests.h in Resources */ = {isa = PBXBuildFile; fileRef = B7B80536129393C400EBE69D /* SidebarTests.h */; };
 		B7B80539129393C400EBE69D /* SidebarTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B80538129393C400EBE69D /* SidebarTests.m */; };
 		B7B80549129395F800EBE69D /* HSSidebarView.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B80548129395F800EBE69D /* HSSidebarView.m */; };
+		B7D4B0B31294F30E00BC0A01 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D4B0B21294F30E00BC0A01 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +50,7 @@
 		B7B80547129395F800EBE69D /* HSSidebarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSSidebarView.h; sourceTree = "<group>"; };
 		B7B80548129395F800EBE69D /* HSSidebarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSSidebarView.m; sourceTree = "<group>"; };
 		B7B8054A12939ADD00EBE69D /* HSSidebarViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSSidebarViewDelegate.h; sourceTree = "<group>"; };
+		B7D4B0B21294F30E00BC0A01 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Xcode4/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7D4B0B31294F30E00BC0A01 /* QuartzCore.framework in Frameworks */,
 				B7B80510129393C300EBE69D /* UIKit.framework in Frameworks */,
 				B7B80512129393C300EBE69D /* Foundation.framework in Frameworks */,
 				B7B80514129393C300EBE69D /* CoreGraphics.framework in Frameworks */,
@@ -125,6 +128,7 @@
 		B7B80507129393C300EBE69D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B7D4B0B21294F30E00BC0A01 /* QuartzCore.framework */,
 				B7B8050F129393C300EBE69D /* UIKit.framework */,
 				B7B80511129393C300EBE69D /* Foundation.framework */,
 				B7B80513129393C300EBE69D /* CoreGraphics.framework */,
