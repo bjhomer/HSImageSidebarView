@@ -165,33 +165,33 @@
 }
 
 - (void)pressedSidebar:(UILongPressGestureRecognizer *)recognizer {
-	UIView *hitView = [self hitTest:[recognizer locationInView:self] withEvent:nil];
-	if (hitView == _scrollView) {
-		CGFloat hitY = [recognizer locationInView:_scrollView].y;
-		NSInteger currentIndex = hitY / 80;
-		UIImageView *hitView = [self.imageViews objectAtIndex:currentIndex];
-		if (recognizer.state == UIGestureRecognizerStateBegan) {
-			self.selectedIndex = -1;
-			hitView.alpha = 0.5;
-			self.viewBeingDragged = hitView;
-			[_scrollView bringSubviewToFront:viewBeingDragged];
-		}
-		else if (recognizer.state == UIGestureRecognizerStateChanged) {
-			CGPoint newPosition = [recognizer locationInView:_scrollView]; 
-			viewBeingDragged.center = CGPointMake(viewBeingDragged.center.x, newPosition.y);
-		}
-		else {
-			CGPoint finalPosition = [self imageViewCenterInScrollViewForIndex:currentIndex];
-			[UIView animateWithDuration:0.1
-							 animations:^{
-								 viewBeingDragged.center = finalPosition;
-								 viewBeingDragged.alpha = 1.0;
-							 }];
-			[imageViews removeObject:viewBeingDragged];
-			[imageViews insertObject:viewBeingDragged atIndex:currentIndex];
-			[self setNeedsLayout];
-			self.viewBeingDragged = nil;
-		}
+	CGFloat hitY = [recognizer locationInView:_scrollView].y;
+	NSInteger currentIndex = hitY / 80;
+	
+	UIImageView *hitView = [self.imageViews objectAtIndex:currentIndex];
+	
+	if (recognizer.state == UIGestureRecognizerStateBegan) {
+		self.selectedIndex = -1;
+		hitView.alpha = 0.5;
+		self.viewBeingDragged = hitView;
+		[_scrollView bringSubviewToFront:viewBeingDragged];
+	}
+	else if (recognizer.state == UIGestureRecognizerStateChanged) {
+		CGPoint newPosition = [recognizer locationInView:_scrollView]; 
+		viewBeingDragged.center = CGPointMake(viewBeingDragged.center.x, newPosition.y);
+	}
+	else {
+		CGPoint finalPosition = [self imageViewCenterInScrollViewForIndex:currentIndex];
+		[UIView animateWithDuration:0.1
+						 animations:^{
+							 viewBeingDragged.center = finalPosition;
+							 viewBeingDragged.alpha = 1.0;
+						 }];
+		[imageViews removeObject:viewBeingDragged];
+		[imageViews insertObject:viewBeingDragged atIndex:currentIndex];
+		self.selectedIndex = currentIndex;
+		[self setNeedsLayout];
+		self.viewBeingDragged = nil;
 	}
 }
 
@@ -204,7 +204,7 @@
 
 - (void)setSelectedIndex:(NSInteger)newIndex {
 	selectedIndex = newIndex;
-	[self layoutSubviews];
+	[self setNeedsLayout];
 }
 
 
