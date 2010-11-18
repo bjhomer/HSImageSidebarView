@@ -140,8 +140,14 @@
 - (void)tappedSidebar:(UITapGestureRecognizer *)recognizer  {
 	UIView *hitView = [self hitTest:[recognizer locationInView:self] withEvent:nil];
 	if (hitView == _scrollView) {
-		CGFloat hitY = [recognizer locationInView:_scrollView].y + _scrollView.contentOffset.y;
-		self.selectedIndex = hitY / 80;
+		CGFloat hitY = [recognizer locationInView:_scrollView].y;
+		NSInteger newSelection = hitY / 80;
+		if (newSelection != selectedIndex) {
+			self.selectedIndex = newSelection;
+		}
+		else if ([delegate respondsToSelector:@selector(sidebar:didTapImageAtIndex:)]) {
+			[delegate sidebar:self didTapImageAtIndex:selectedIndex];
+		}
 		
 	}
 }

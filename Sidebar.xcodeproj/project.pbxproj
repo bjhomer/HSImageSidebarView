@@ -50,7 +50,7 @@
 		B7B80547129395F800EBE69D /* HSSidebarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSSidebarView.h; sourceTree = "<group>"; };
 		B7B80548129395F800EBE69D /* HSSidebarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSSidebarView.m; sourceTree = "<group>"; };
 		B7B8054A12939ADD00EBE69D /* HSSidebarViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSSidebarViewDelegate.h; sourceTree = "<group>"; };
-		B7D4B0B21294F30E00BC0A01 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Xcode4/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		B7D4B0B21294F30E00BC0A01 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */

@@ -65,6 +65,10 @@
 }
 
 
+-(void)sidebar:(HSSidebarView *)sidebar didTapImageAtIndex:(NSUInteger)anIndex {
+	NSLog(@"Touched selected image at index: %u", anIndex);
+}
+
 - (void)dealloc {
     [_sidebar release];
     [super dealloc];
