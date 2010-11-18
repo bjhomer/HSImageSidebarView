@@ -15,8 +15,9 @@
 @property (retain) UIScrollView *scrollView;
 @property (retain) CAGradientLayer *selectionGradient;
 
-@property (retain) NSMutableArray *imageCache;
-@property BOOL initialized;
+@property (retain) NSMutableArray *imageViews;
+@property (assign) BOOL initialized;
+@property (retain) UIView *viewBeingDragged;
 
 // readwrite overrides of public readonly methods
 @property (readwrite) NSUInteger imageCount;
@@ -27,9 +28,11 @@
 @end
 
 @implementation HSSidebarView
-@synthesize scrollView=_scrollView, imageCache=_imageCache;
+@synthesize scrollView=_scrollView;
+@synthesize imageViews;
 @synthesize selectionGradient;
 @synthesize initialized;
+@synthesize viewBeingDragged;
 @synthesize selectedIndex;
 @synthesize imageCount;
 @synthesize delegate;
@@ -55,7 +58,9 @@
 
 - (void)dealloc {
 	[_scrollView release];
-	[_imageCache release];
+	[imageViews release];
+	[viewBeingDragged release];
+	[selectionGradient release];
 	[super dealloc];
 }
 
@@ -82,11 +87,15 @@
 	UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedSidebar:)];
 	[self addGestureRecognizer:tapRecognizer];
 	[tapRecognizer release];
+	
+	UILongPressGestureRecognizer *pressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(pressedSidebar:)];
+	[self addGestureRecognizer:pressRecognizer];
+	[pressRecognizer release];
 }
 
 - (void) setupInstanceVariables {
 	selectedIndex = 3;
-	self.imageCache = [NSMutableArray array];
+	self.imageViews = [NSMutableArray array];
 }
 
 #pragma mark -
@@ -126,12 +135,12 @@
 		
 		CGFloat imageHeight = image.size.height / image.size.width * imageWidth;
 		CGFloat imageOriginY = (rowHeight - imageHeight) / 2.0;
-		[self.imageCache addObject:image];
 		
 		UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
 		imageView.frame = CGRectMake(imageOriginX, rowHeight*i + imageOriginY,
 									 imageWidth, imageHeight);
 		[_scrollView addSubview:imageView];
+		[self.imageViews addObject:imageView];
 		[imageView release];
 	}
 	_scrollView.contentSize = CGSizeMake(_scrollView.bounds.size.width, imageCount*80);
@@ -148,9 +157,41 @@
 		else if ([delegate respondsToSelector:@selector(sidebar:didTapImageAtIndex:)]) {
 			[delegate sidebar:self didTapImageAtIndex:selectedIndex];
 		}
-		
 	}
 }
+
+- (void)pressedSidebar:(UILongPressGestureRecognizer *)recognizer {
+	UIView *hitView = [self hitTest:[recognizer locationInView:self] withEvent:nil];
+	if (hitView == _scrollView) {
+		CGFloat hitY = [recognizer locationInView:_scrollView].y;
+		NSInteger pressedIndex = hitY / 80;
+		UIImageView *hitView = [self.imageViews objectAtIndex:pressedIndex];
+		if (recognizer.state == UIGestureRecognizerStateBegan) {
+			hitView.alpha = 0.5;
+			self.viewBeingDragged = hitView;
+			[_scrollView bringSubviewToFront:viewBeingDragged];
+		}
+		else if (recognizer.state == UIGestureRecognizerStateChanged) {
+			CGPoint newPosition = [recognizer locationInView:_scrollView]; 
+			viewBeingDragged.center = CGPointMake(viewBeingDragged.center.x, newPosition.y);
+		}
+		else {
+			CGPoint finalPosition = viewBeingDragged.center;
+			finalPosition.y = pressedIndex * 80 + 40;
+			[UIView animateWithDuration:0.1
+							 animations:^{
+								 viewBeingDragged.center = finalPosition;
+								 viewBeingDragged.alpha = 1.0;
+							 }];
+			self.viewBeingDragged = nil;
+		}
+	}
+}
+
+- (void)panningSelection:(UIPanGestureRecognizer *)panRecognizer {
+	NSLog(@"panning");
+}
+
 
 #pragma mark -
 #pragma mark Accessors
