@@ -25,6 +25,9 @@
 - (void)setupViewHierarchy;
 - (void)setupInstanceVariables;
 
+- (CGRect)imageViewFrameInScrollViewForIndex:(NSUInteger)anIndex;
+- (CGPoint)imageViewCenterInScrollViewForIndex:(NSUInteger)anIndex;
+
 @end
 
 @implementation HSSidebarView
@@ -105,6 +108,15 @@
 		[self reloadData];
 		self.initialized = YES;
 	}
+	else {
+		[UIView animateWithDuration:0.1
+						 animations:
+		 ^{
+			 [imageViews enumerateObjectsUsingBlock:^(UIView *view, NSUInteger idx, BOOL *stop) {
+				 view.center = [self imageViewCenterInScrollViewForIndex:idx];
+			 }];
+		 }];
+	}
 	
 	// Draw selection layer
 	if (selectedIndex >= 0) {
@@ -126,19 +138,11 @@
 - (void) reloadData {
 	self.imageCount = [delegate countOfImagesInSidebar:self];
 	
-	CGFloat imageWidth = self.scrollView.bounds.size.width * 3.0 / 4.0;
-	CGFloat imageOriginX = self.scrollView.bounds.size.width / 8.0;
-	CGFloat rowHeight = 80;
-	
 	for (int i=0; i<imageCount; ++i) {
 		UIImage *image = [delegate sidebar:self imageForIndex:i];
 		
-		CGFloat imageHeight = image.size.height / image.size.width * imageWidth;
-		CGFloat imageOriginY = (rowHeight - imageHeight) / 2.0;
-		
 		UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-		imageView.frame = CGRectMake(imageOriginX, rowHeight*i + imageOriginY,
-									 imageWidth, imageHeight);
+		imageView.frame = [self imageViewFrameInScrollViewForIndex:i];
 		[_scrollView addSubview:imageView];
 		[self.imageViews addObject:imageView];
 		[imageView release];
@@ -164,9 +168,10 @@
 	UIView *hitView = [self hitTest:[recognizer locationInView:self] withEvent:nil];
 	if (hitView == _scrollView) {
 		CGFloat hitY = [recognizer locationInView:_scrollView].y;
-		NSInteger pressedIndex = hitY / 80;
-		UIImageView *hitView = [self.imageViews objectAtIndex:pressedIndex];
+		NSInteger currentIndex = hitY / 80;
+		UIImageView *hitView = [self.imageViews objectAtIndex:currentIndex];
 		if (recognizer.state == UIGestureRecognizerStateBegan) {
+			self.selectedIndex = -1;
 			hitView.alpha = 0.5;
 			self.viewBeingDragged = hitView;
 			[_scrollView bringSubviewToFront:viewBeingDragged];
@@ -176,22 +181,19 @@
 			viewBeingDragged.center = CGPointMake(viewBeingDragged.center.x, newPosition.y);
 		}
 		else {
-			CGPoint finalPosition = viewBeingDragged.center;
-			finalPosition.y = pressedIndex * 80 + 40;
+			CGPoint finalPosition = [self imageViewCenterInScrollViewForIndex:currentIndex];
 			[UIView animateWithDuration:0.1
 							 animations:^{
 								 viewBeingDragged.center = finalPosition;
 								 viewBeingDragged.alpha = 1.0;
 							 }];
+			[imageViews removeObject:viewBeingDragged];
+			[imageViews insertObject:viewBeingDragged atIndex:currentIndex];
+			[self setNeedsLayout];
 			self.viewBeingDragged = nil;
 		}
 	}
 }
-
-- (void)panningSelection:(UIPanGestureRecognizer *)panRecognizer {
-	NSLog(@"panning");
-}
-
 
 #pragma mark -
 #pragma mark Accessors
@@ -205,4 +207,22 @@
 	[self layoutSubviews];
 }
 
+
+- (CGRect)imageViewFrameInScrollViewForIndex:(NSUInteger)anIndex {
+	CGFloat imageViewWidth = self.scrollView.bounds.size.width * 3.0 / 4.0;
+	CGFloat imageViewHeight = imageViewWidth;
+	CGFloat imageOriginX = self.scrollView.bounds.size.width / 8.0;
+	CGFloat rowHeight = 80;
+	
+	CGFloat imageOriginY = (rowHeight - imageViewHeight) / 2.0;
+		
+	return CGRectMake(imageOriginX, rowHeight*anIndex + imageOriginY, imageViewWidth, imageViewHeight);
+}
+
+- (CGPoint)imageViewCenterInScrollViewForIndex:(NSUInteger)anIndex {
+	CGFloat rowHeight = 80;
+	CGFloat imageViewCenterX = CGRectGetMidX(self.scrollView.bounds);
+	CGFloat imageViewCenterY = rowHeight * anIndex + (rowHeight / 2.0);
+	return CGPointMake(imageViewCenterX, imageViewCenterY);
+}
 @end
