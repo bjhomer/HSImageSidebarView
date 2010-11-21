@@ -44,6 +44,7 @@
 @synthesize selectedIndex;
 @synthesize imageCount;
 @synthesize delegate;
+@synthesize rowHeight;
 
 #pragma mark -
 - (id)initWithFrame:(CGRect)frame {
@@ -87,7 +88,7 @@
 	UIColor *topColor = [UIColor blueColor];
 	UIColor *bottomColor = [topColor colorWithAlphaComponent:0.8];
 	selectionGradient.colors = [NSArray arrayWithObjects:(id)[topColor CGColor], (id)[bottomColor CGColor], nil];
-	selectionGradient.bounds = CGRectMake(0, 0, _scrollView.bounds.size.width, 80);
+	selectionGradient.bounds = CGRectMake(0, 0, _scrollView.bounds.size.width, rowHeight);
 	selectionGradient.hidden = YES;
 	
 	[_scrollView.layer addSublayer:selectionGradient];
@@ -103,6 +104,7 @@
 
 - (void) setupInstanceVariables {
 	selectedIndex = 3;
+	self.rowHeight = 80;
 	self.imageViews = [NSMutableArray array];
 }
 
@@ -134,9 +136,9 @@
 						 forKey:kCATransactionDisableActions];
 		
 		selectionGradient.hidden = NO;
-		selectionGradient.frame = CGRectMake(0, 80 * selectedIndex,
+		selectionGradient.frame = CGRectMake(0, rowHeight * selectedIndex,
 											 _scrollView.bounds.size.width, 
-											 80);
+											 rowHeight);
 		[CATransaction commit];
 	}
 	else {
@@ -152,22 +154,24 @@
 		
 		UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
 		imageView.frame = [self imageViewFrameInScrollViewForIndex:i];
+		imageView.contentMode = UIViewContentModeScaleAspectFit;
 		[_scrollView addSubview:imageView];
 		[self.imageViews addObject:imageView];
 		[imageView release];
 	}
-	_scrollView.contentSize = CGSizeMake(_scrollView.bounds.size.width, imageCount*80);
+	_scrollView.contentSize = CGSizeMake(_scrollView.bounds.size.width, imageCount*rowHeight);
 }
 
 - (void)tappedSidebar:(UITapGestureRecognizer *)recognizer  {
 	UIView *hitView = [self hitTest:[recognizer locationInView:self] withEvent:nil];
 	if (hitView == _scrollView) {
 		CGFloat hitY = [recognizer locationInView:_scrollView].y;
-		NSInteger newSelection = hitY / 80;
+		NSInteger newSelection = hitY / rowHeight;
 		if (newSelection != selectedIndex) {
 			self.selectedIndex = newSelection;
 		}
-		else if ([delegate respondsToSelector:@selector(sidebar:didTapImageAtIndex:)]) {
+		
+		if ([delegate respondsToSelector:@selector(sidebar:didTapImageAtIndex:)]) {
 			[delegate sidebar:self didTapImageAtIndex:selectedIndex];
 		}
 	}
@@ -175,7 +179,7 @@
 
 - (void)pressedSidebar:(UILongPressGestureRecognizer *)recognizer {
 	CGFloat hitY = [recognizer locationInView:_scrollView].y;
-	NSInteger currentIndex = hitY / 80;
+	NSInteger currentIndex = hitY / rowHeight;
 	
 	UIImageView *hitView = [self.imageViews objectAtIndex:currentIndex];
 	
@@ -236,20 +240,28 @@
 	[self setNeedsLayout];
 }
 
+- (CGFloat)rowHeight {
+	return rowHeight;
+}
+
+- (void)setRowHeight:(CGFloat)newHeight {
+	rowHeight = newHeight;
+	[self setNeedsLayout];
+}
+
 
 - (CGRect)imageViewFrameInScrollViewForIndex:(NSUInteger)anIndex {
-	CGFloat imageViewWidth = self.scrollView.bounds.size.width * 3.0 / 4.0;
-	CGFloat imageViewHeight = imageViewWidth;
-	CGFloat imageOriginX = self.scrollView.bounds.size.width / 8.0;
-	CGFloat rowHeight = 80;
+	CGFloat rowWidth = self.scrollView.bounds.size.width;
+	CGFloat imageViewWidth =  rowWidth * 3.0 / 4.0;
+	CGFloat imageViewHeight = rowHeight * 3.0 / 4.0;
 	
+	CGFloat imageOriginX = (rowWidth - imageViewWidth) / 2.0;
 	CGFloat imageOriginY = (rowHeight - imageViewHeight) / 2.0;
 		
 	return CGRectMake(imageOriginX, rowHeight*anIndex + imageOriginY, imageViewWidth, imageViewHeight);
 }
 
 - (CGPoint)imageViewCenterInScrollViewForIndex:(NSUInteger)anIndex {
-	CGFloat rowHeight = 80;
 	CGFloat imageViewCenterX = CGRectGetMidX(self.scrollView.bounds);
 	CGFloat imageViewCenterY = rowHeight * anIndex + (rowHeight / 2.0);
 	return CGPointMake(imageViewCenterX, imageViewCenterY);

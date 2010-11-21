@@ -17,6 +17,7 @@
 
 @property (assign) id<HSSidebarViewDelegate> delegate;
 
+@property (assign) CGFloat rowHeight;
 @property NSInteger selectedIndex;
 
 - (void)reloadData;
