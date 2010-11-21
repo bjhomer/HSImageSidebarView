@@ -69,6 +69,10 @@
 	NSLog(@"Touched selected image at index: %u", anIndex);
 }
 
+- (void)sidebar:(HSSidebarView *)sidebar didMoveImageAtIndex:(NSUInteger)oldIndex toIndex:(NSUInteger)newIndex {
+	NSLog(@"Image at index %d moved to index %d", oldIndex, newIndex);
+}
+
 - (void)dealloc {
     [_sidebar release];
     [super dealloc];

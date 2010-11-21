@@ -17,7 +17,10 @@
 
 @property (retain) NSMutableArray *imageViews;
 @property (assign) BOOL initialized;
+
 @property (retain) UIView *viewBeingDragged;
+@property (assign) NSInteger draggedViewOldIndex;
+@property (assign) CGFloat dragOffsetY;
 
 // readwrite overrides of public readonly methods
 @property (readwrite) NSUInteger imageCount;
@@ -36,6 +39,8 @@
 @synthesize selectionGradient;
 @synthesize initialized;
 @synthesize viewBeingDragged;
+@synthesize draggedViewOldIndex;
+@synthesize dragOffsetY;
 @synthesize selectedIndex;
 @synthesize imageCount;
 @synthesize delegate;
@@ -109,13 +114,17 @@
 		self.initialized = YES;
 	}
 	else {
-		[UIView animateWithDuration:0.1
-						 animations:
-		 ^{
-			 [imageViews enumerateObjectsUsingBlock:^(UIView *view, NSUInteger idx, BOOL *stop) {
-				 view.center = [self imageViewCenterInScrollViewForIndex:idx];
-			 }];
-		 }];
+		[UIView animateWithDuration:0.2
+							  delay:0
+							options:UIViewAnimationOptionAllowUserInteraction
+						 animations:^{
+							 [imageViews enumerateObjectsUsingBlock:^(UIView *view, NSUInteger idx, BOOL *stop) {
+								 if (view != self.viewBeingDragged) {
+									 view.center = [self imageViewCenterInScrollViewForIndex:idx];
+								 }
+							 }];
+						 }
+						completion:NULL];
 	}
 	
 	// Draw selection layer
@@ -172,25 +181,45 @@
 	
 	if (recognizer.state == UIGestureRecognizerStateBegan) {
 		self.selectedIndex = -1;
-		hitView.alpha = 0.5;
+		[UIView animateWithDuration:0.1
+						 animations:^{
+							 hitView.alpha = 0.5;
+							 hitView.transform = CGAffineTransformMakeScale(1.1, 1.1);
+						 }
+		 ];
 		self.viewBeingDragged = hitView;
+		self.draggedViewOldIndex = currentIndex;
+		self.dragOffsetY = hitY - [self imageViewCenterInScrollViewForIndex:currentIndex].y;
 		[_scrollView bringSubviewToFront:viewBeingDragged];
 	}
 	else if (recognizer.state == UIGestureRecognizerStateChanged) {
 		CGPoint newPosition = [recognizer locationInView:_scrollView]; 
-		viewBeingDragged.center = CGPointMake(viewBeingDragged.center.x, newPosition.y);
+		viewBeingDragged.center = CGPointMake(viewBeingDragged.center.x, newPosition.y - self.dragOffsetY);
+		[imageViews removeObject:viewBeingDragged];
+		[imageViews insertObject:viewBeingDragged atIndex:currentIndex];
+		[self setNeedsLayout];
 	}
 	else {
 		CGPoint finalPosition = [self imageViewCenterInScrollViewForIndex:currentIndex];
-		[UIView animateWithDuration:0.1
+		[UIView animateWithDuration:0.2
 						 animations:^{
 							 viewBeingDragged.center = finalPosition;
 							 viewBeingDragged.alpha = 1.0;
+							 viewBeingDragged.transform = CGAffineTransformIdentity;
+						 }
+						 completion:^(BOOL finished){
+							 self.selectedIndex = currentIndex;
+							 [self setNeedsLayout];
 						 }];
 		[imageViews removeObject:viewBeingDragged];
 		[imageViews insertObject:viewBeingDragged atIndex:currentIndex];
-		self.selectedIndex = currentIndex;
-		[self setNeedsLayout];
+		
+		if ([delegate respondsToSelector:@selector(sidebar:didMoveImageAtIndex:toIndex:)]) {
+			[delegate sidebar:self didMoveImageAtIndex:self.draggedViewOldIndex toIndex:currentIndex];
+		}
+		
+		self.draggedViewOldIndex = -1;
+		self.dragOffsetY = 0;
 		self.viewBeingDragged = nil;
 	}
 }

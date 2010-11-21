@@ -15,6 +15,7 @@
 #pragma mark Delegate methods
 @optional
 - (void)sidebar:(HSSidebarView *)sidebar didTapImageAtIndex:(NSUInteger)anIndex;
+- (void)sidebar:(HSSidebarView *)sidebar didMoveImageAtIndex:(NSUInteger)oldIndex toIndex:(NSUInteger)newIndex;
 
 #pragma mark -
 #pragma mark Data source methods
