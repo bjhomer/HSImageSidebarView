@@ -20,5 +20,9 @@
 @property (assign) CGFloat rowHeight;
 @property NSInteger selectedIndex;
 
+- (BOOL)imageAtIndexIsVisible:(NSUInteger)anIndex;
+- (NSIndexSet *)visibleIndices;
+
 - (void)reloadData;
+
 @end

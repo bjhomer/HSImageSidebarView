@@ -61,7 +61,17 @@
 }
 
 -(UIImage *)sidebar:(HSSidebarView *)sidebar imageForIndex:(NSUInteger)anIndex {
-	return [UIImage imageWithContentsOfFile:@"/Users/bjhomer/Desktop/Rough SmileSwap Icon.png"];
+	switch (anIndex % 3) {
+		case 0:
+			return [UIImage imageNamed:@"Blue"];
+			break;
+		case 1:
+			return [UIImage imageNamed:@"Red"];
+			break;
+		default:
+			return [UIImage imageNamed:@"Green"];
+			
+	}
 }
 
 

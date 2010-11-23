@@ -25,6 +25,7 @@
 // readwrite overrides of public readonly methods
 @property (readwrite) NSUInteger imageCount;
 
+
 - (void)setupViewHierarchy;
 - (void)setupInstanceVariables;
 
@@ -115,19 +116,34 @@
 		[self reloadData];
 		self.initialized = YES;
 	}
-	else {
-		[UIView animateWithDuration:0.2
-							  delay:0
-							options:UIViewAnimationOptionAllowUserInteraction
-						 animations:^{
-							 [imageViews enumerateObjectsUsingBlock:^(UIView *view, NSUInteger idx, BOOL *stop) {
-								 if (view != self.viewBeingDragged) {
-									 view.center = [self imageViewCenterInScrollViewForIndex:idx];
-								 }
-							 }];
-						 }
-						completion:NULL];
-	}
+	
+	id noView = [NSNull null];
+	
+	NSIndexSet *visibleIndices = [self visibleIndices];
+	[visibleIndices enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {		
+		if ([imageViews objectAtIndex:idx] == noView) {
+			UIImage *image = [delegate sidebar:self imageForIndex:idx];
+			
+			UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+			imageView.frame = [self imageViewFrameInScrollViewForIndex:idx];
+			imageView.contentMode = UIViewContentModeScaleAspectFit;
+			[_scrollView addSubview:imageView];
+			[self.imageViews replaceObjectAtIndex:idx withObject:imageView];
+			[imageView release];
+		}
+	}];
+	
+	[UIView animateWithDuration:0.2
+						  delay:0
+						options:UIViewAnimationOptionAllowUserInteraction
+					 animations:^{
+						 [imageViews enumerateObjectsUsingBlock:^(UIView *view, NSUInteger idx, BOOL *stop) {
+							 if (view != noView && view != self.viewBeingDragged && [self imageAtIndexIsVisible:idx]) {
+								 view.center = [self imageViewCenterInScrollViewForIndex:idx];
+							 }
+						 }];
+					 }
+					completion:NULL];
 	
 	// Draw selection layer
 	if (selectedIndex >= 0) {
@@ -149,17 +165,12 @@
 - (void) reloadData {
 	self.imageCount = [delegate countOfImagesInSidebar:self];
 	
-	for (int i=0; i<imageCount; ++i) {
-		UIImage *image = [delegate sidebar:self imageForIndex:i];
-		
-		UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-		imageView.frame = [self imageViewFrameInScrollViewForIndex:i];
-		imageView.contentMode = UIViewContentModeScaleAspectFit;
-		[_scrollView addSubview:imageView];
-		[self.imageViews addObject:imageView];
-		[imageView release];
+	for (NSUInteger i=0; i<imageCount; ++i) {
+		[imageViews addObject:[NSNull null]];
 	}
+	
 	_scrollView.contentSize = CGSizeMake(_scrollView.bounds.size.width, imageCount*rowHeight);
+	[self setNeedsLayout];
 }
 
 - (void)tappedSidebar:(UITapGestureRecognizer *)recognizer  {
@@ -251,7 +262,7 @@
 
 
 - (CGRect)imageViewFrameInScrollViewForIndex:(NSUInteger)anIndex {
-	CGFloat rowWidth = self.scrollView.bounds.size.width;
+	CGFloat rowWidth = _scrollView.bounds.size.width;
 	CGFloat imageViewWidth =  rowWidth * 3.0 / 4.0;
 	CGFloat imageViewHeight = rowHeight * 3.0 / 4.0;
 	
@@ -262,8 +273,24 @@
 }
 
 - (CGPoint)imageViewCenterInScrollViewForIndex:(NSUInteger)anIndex {
-	CGFloat imageViewCenterX = CGRectGetMidX(self.scrollView.bounds);
+	CGFloat imageViewCenterX = CGRectGetMidX(_scrollView.bounds);
 	CGFloat imageViewCenterY = rowHeight * anIndex + (rowHeight / 2.0);
 	return CGPointMake(imageViewCenterX, imageViewCenterY);
 }
+
+- (BOOL)imageAtIndexIsVisible:(NSUInteger)anIndex {
+	CGRect imageRect = [self imageViewFrameInScrollViewForIndex:anIndex];
+	return CGRectIntersectsRect([_scrollView bounds], imageRect);
+}
+
+- (NSIndexSet *)visibleIndices {
+	NSUInteger firstRow = _scrollView.contentOffset.y / rowHeight;
+	NSUInteger lastRow = (CGRectGetMaxY(_scrollView.bounds)) / rowHeight;
+	if (lastRow > imageCount - 1) {
+		lastRow = imageCount - 1;
+	}
+	
+	return [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(firstRow, lastRow - firstRow + 1)];
+}
+
 @end
