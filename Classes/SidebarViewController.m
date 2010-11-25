@@ -63,6 +63,13 @@
 }
 
 
+- (IBAction)insertRow:(id)sender {
+	NSInteger insertionIndex = _sidebar.selectedIndex + 1;
+	[colors insertObject:[NSNumber numberWithInt:arc4random()%3]
+				 atIndex:insertionIndex];
+	[_sidebar insertRowAtIndex:insertionIndex];
+}
+
 - (IBAction)deleteSelection:(id)sender {
 	NSInteger selectedIndex = _sidebar.selectedIndex;
 	if (selectedIndex != -1) {

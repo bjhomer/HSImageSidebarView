@@ -22,6 +22,7 @@
 
 - (BOOL)imageAtIndexIsVisible:(NSUInteger)anIndex;
 
+- (void)insertRowAtIndex:(NSUInteger)anIndex;
 - (void)deleteRowAtIndex:(NSUInteger)anIndex;
 - (void)reloadData;
 

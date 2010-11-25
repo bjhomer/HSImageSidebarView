@@ -18,6 +18,7 @@
 }
 @property (nonatomic, retain) IBOutlet HSSidebarView *sidebar;
 
+- (IBAction)insertRow:(id)sender;
 - (IBAction)deleteSelection:(id)sender;
 
 @end

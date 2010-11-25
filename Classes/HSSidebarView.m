@@ -22,12 +22,9 @@
 @property (assign) NSInteger draggedViewOldIndex;
 @property (assign) CGFloat dragOffsetY;
 
-// readwrite overrides of public readonly methods
-@property (readwrite) NSUInteger imageCount;
-
-
 - (void)setupViewHierarchy;
 - (void)setupInstanceVariables;
+- (void)recalculateScrollViewContentSize;
 
 - (CGRect)imageViewFrameInScrollViewForIndex:(NSUInteger)anIndex;
 - (CGPoint)imageViewCenterInScrollViewForIndex:(NSUInteger)anIndex;
@@ -43,7 +40,6 @@
 @synthesize draggedViewOldIndex;
 @synthesize dragOffsetY;
 @synthesize selectedIndex;
-@synthesize imageCount;
 @synthesize delegate;
 @synthesize rowHeight;
 
@@ -82,6 +78,7 @@
 	[_scrollView setAutoresizingMask: UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleHeight];
 	
 	_scrollView.backgroundColor = [UIColor scrollViewTexturedBackgroundColor];
+	_scrollView.alwaysBounceVertical = YES;
 	[self addSubview:_scrollView];
 	
 	self.selectionGradient = [CAGradientLayer layer];
@@ -129,6 +126,14 @@
 			imageView.frame = [self imageViewFrameInScrollViewForIndex:idx];
 			imageView.contentMode = UIViewContentModeScaleAspectFit;
 			[_scrollView addSubview:imageView];
+			imageView.alpha = 0;
+			[UIView animateWithDuration:0.2
+								  delay:0
+								options:UIViewAnimationOptionAllowUserInteraction
+							 animations:^{
+								 imageView.alpha = 1.0;
+							 }
+							 completion:NULL];
 			[self.imageViews replaceObjectAtIndex:idx withObject:imageView];
 			[imageView release];
 		}
@@ -139,7 +144,7 @@
 						options:UIViewAnimationOptionAllowUserInteraction
 					 animations:^{
 						 [imageViews enumerateObjectsUsingBlock:^(UIView *view, NSUInteger idx, BOOL *stop) {
-							 if (view != noView && view != self.viewBeingDragged && [self imageAtIndexIsVisible:idx]) {
+							 if (view != noView && view != self.viewBeingDragged) {
 								 view.center = [self imageViewCenterInScrollViewForIndex:idx];
 							 }
 						 }];
@@ -163,14 +168,51 @@
 	}
 }
 
+- (void)recalculateScrollViewContentSize {
+	_scrollView.contentSize = CGSizeMake(_scrollView.bounds.size.width, self.imageCount*rowHeight);
+}
+
 - (void) reloadData {
-	self.imageCount = [delegate countOfImagesInSidebar:self];
+	NSUInteger imageCount = [delegate countOfImagesInSidebar:self];
 	
 	for (NSUInteger i=0; i<imageCount; ++i) {
 		[imageViews addObject:[NSNull null]];
 	}
 	
-	_scrollView.contentSize = CGSizeMake(_scrollView.bounds.size.width, imageCount*rowHeight);
+	[self recalculateScrollViewContentSize];
+	[self setNeedsLayout];
+}
+
+- (void)insertRowAtIndex:(NSUInteger)anIndex {
+	[imageViews insertObject:[NSNull null] atIndex:anIndex];
+	self.selectedIndex = anIndex;
+	
+	CGRect scrollBounds = _scrollView.bounds;
+	CGRect imageFrame = [self imageViewFrameInScrollViewForIndex:self.selectedIndex];
+	
+	CGFloat scrollTop = CGRectGetMinY(scrollBounds);
+	CGFloat scrollBottom = CGRectGetMaxY(scrollBounds);
+	CGFloat imageTop = CGRectGetMinY(imageFrame);
+	CGFloat imageBottom = CGRectGetMaxY(imageFrame);
+	
+	CGPoint oldOffset = _scrollView.contentOffset;
+	
+	if (imageTop < scrollTop) {
+		// It's off the top of the screen
+		CGFloat delta = scrollTop - imageTop + 10 + (rowHeight / 2);
+		CGPoint newOffset = CGPointMake(oldOffset.x, oldOffset.y - delta);
+		
+		[_scrollView setContentOffset:newOffset animated:YES];
+	}
+	else if (scrollBottom < imageBottom) {
+		// It's off the bottom of the screen
+		
+		CGFloat delta = imageBottom - scrollBottom + 10 + (rowHeight / 2);
+		CGPoint newOffset = CGPointMake(oldOffset.x, oldOffset.y + delta);
+		
+		[_scrollView setContentOffset:newOffset animated:YES];
+	}
+	
 	[self setNeedsLayout];
 }
 
@@ -179,12 +221,11 @@
 	[selectedView removeFromSuperview];
 	[imageViews removeObjectAtIndex:anIndex];
 
-	if (anIndex > selectedIndex || anIndex == (imageCount - 1) ) {
+	if (anIndex > selectedIndex || anIndex == self.imageCount) {
 		self.selectedIndex -= 1;
 	}
 	
-	self.imageCount -= 1;
-	_scrollView.contentSize = CGSizeMake(_scrollView.bounds.size.width, imageCount*rowHeight);
+	[self recalculateScrollViewContentSize];
 	
 	[self setNeedsLayout];
 }
@@ -194,8 +235,11 @@
 	if (hitView == _scrollView) {
 		CGFloat hitY = [recognizer locationInView:_scrollView].y;
 		NSInteger newSelection = hitY / rowHeight;
-		if (newSelection != selectedIndex && newSelection < imageCount) {
+		if (newSelection != selectedIndex && newSelection < self.imageCount) {
 			self.selectedIndex = newSelection;
+		}
+		else {
+			self.selectedIndex = -1;
 		}
 		
 		if ([delegate respondsToSelector:@selector(sidebar:didTapImageAtIndex:)]) {
@@ -207,6 +251,13 @@
 - (void)pressedSidebar:(UILongPressGestureRecognizer *)recognizer {
 	CGFloat hitY = [recognizer locationInView:_scrollView].y;
 	NSInteger currentIndex = hitY / rowHeight;
+	
+	if (currentIndex > self.imageCount - 1) {
+		currentIndex = self.imageCount - 1;
+	}
+	else if (currentIndex < 0) {
+		currentIndex = 0;
+	}
 	
 	UIImageView *hitView = [self.imageViews objectAtIndex:currentIndex];
 	
@@ -276,6 +327,10 @@
 	[self setNeedsLayout];
 }
 
+- (NSUInteger)imageCount {
+	return [imageViews count];
+}
+
 
 - (CGRect)imageViewFrameInScrollViewForIndex:(NSUInteger)anIndex {
 	CGFloat rowWidth = _scrollView.bounds.size.width;
@@ -302,6 +357,7 @@
 - (NSIndexSet *)visibleIndices {
 	NSUInteger firstRow = _scrollView.contentOffset.y / rowHeight;
 	NSUInteger lastRow = (CGRectGetMaxY(_scrollView.bounds)) / rowHeight;
+	NSUInteger imageCount = self.imageCount;
 	if (lastRow > imageCount - 1 || imageCount == 0) {
 		lastRow = imageCount - 1;
 	}
