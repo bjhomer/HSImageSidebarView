@@ -86,8 +86,9 @@
 	
 	self.selectionGradient = [CAGradientLayer layer];
 	
-	UIColor *topColor = [UIColor blueColor];
-	UIColor *bottomColor = [topColor colorWithAlphaComponent:0.8];
+	UIColor *baseColor = [UIColor blueColor];
+	UIColor *topColor = [baseColor colorWithAlphaComponent:0.9];
+	UIColor *bottomColor = [baseColor colorWithAlphaComponent:0.6];
 	selectionGradient.colors = [NSArray arrayWithObjects:(id)[topColor CGColor], (id)[bottomColor CGColor], nil];
 	selectionGradient.bounds = CGRectMake(0, 0, _scrollView.bounds.size.width, rowHeight);
 	selectionGradient.hidden = YES;
@@ -173,12 +174,27 @@
 	[self setNeedsLayout];
 }
 
+- (void)deleteRowAtIndex:(NSUInteger)anIndex {
+	UIImageView *selectedView = [imageViews objectAtIndex:anIndex];
+	[selectedView removeFromSuperview];
+	[imageViews removeObjectAtIndex:anIndex];
+
+	if (anIndex > selectedIndex || anIndex == (imageCount - 1) ) {
+		self.selectedIndex -= 1;
+	}
+	
+	self.imageCount -= 1;
+	_scrollView.contentSize = CGSizeMake(_scrollView.bounds.size.width, imageCount*rowHeight);
+	
+	[self setNeedsLayout];
+}
+
 - (void)tappedSidebar:(UITapGestureRecognizer *)recognizer  {
 	UIView *hitView = [self hitTest:[recognizer locationInView:self] withEvent:nil];
 	if (hitView == _scrollView) {
 		CGFloat hitY = [recognizer locationInView:_scrollView].y;
 		NSInteger newSelection = hitY / rowHeight;
-		if (newSelection != selectedIndex) {
+		if (newSelection != selectedIndex && newSelection < imageCount) {
 			self.selectedIndex = newSelection;
 		}
 		
@@ -286,7 +302,7 @@
 - (NSIndexSet *)visibleIndices {
 	NSUInteger firstRow = _scrollView.contentOffset.y / rowHeight;
 	NSUInteger lastRow = (CGRectGetMaxY(_scrollView.bounds)) / rowHeight;
-	if (lastRow > imageCount - 1) {
+	if (lastRow > imageCount - 1 || imageCount == 0) {
 		lastRow = imageCount - 1;
 	}
 	

@@ -14,15 +14,15 @@
 }
 
 @property (readonly) NSUInteger imageCount;
+@property (readonly) NSIndexSet *visibleIndices;
 
 @property (assign) id<HSSidebarViewDelegate> delegate;
-
 @property (assign) CGFloat rowHeight;
-@property NSInteger selectedIndex;
+@property (assign) NSInteger selectedIndex;
 
 - (BOOL)imageAtIndexIsVisible:(NSUInteger)anIndex;
-- (NSIndexSet *)visibleIndices;
 
+- (void)deleteRowAtIndex:(NSUInteger)anIndex;
 - (void)reloadData;
 
 @end

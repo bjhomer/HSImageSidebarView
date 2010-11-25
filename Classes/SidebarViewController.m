@@ -34,6 +34,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	_sidebar.delegate = self;
+	
+	colors = [[NSMutableArray alloc] init];
+	
+	for (int i=0; i<10; ++i) {
+		[colors addObject:[NSNumber numberWithInt:i%3]];
+	}
 }
 
 
@@ -56,12 +62,23 @@
     self.sidebar = nil;
 }
 
+
+- (IBAction)deleteSelection:(id)sender {
+	NSInteger selectedIndex = _sidebar.selectedIndex;
+	if (selectedIndex != -1) {
+		[colors removeObjectAtIndex:selectedIndex];
+		[_sidebar deleteRowAtIndex:selectedIndex];
+	}
+}
+
+
 -(NSUInteger)countOfImagesInSidebar:(HSSidebarView *)sidebar {
-	return 30;
+	return [colors count];
 }
 
 -(UIImage *)sidebar:(HSSidebarView *)sidebar imageForIndex:(NSUInteger)anIndex {
-	switch (anIndex % 3) {
+	int color = [[colors objectAtIndex:anIndex] intValue];
+	switch (color % 3) {
 		case 0:
 			return [UIImage imageNamed:@"Blue"];
 			break;
@@ -74,18 +91,22 @@
 	}
 }
 
-
 -(void)sidebar:(HSSidebarView *)sidebar didTapImageAtIndex:(NSUInteger)anIndex {
 	NSLog(@"Touched selected image at index: %u", anIndex);
 }
 
 - (void)sidebar:(HSSidebarView *)sidebar didMoveImageAtIndex:(NSUInteger)oldIndex toIndex:(NSUInteger)newIndex {
 	NSLog(@"Image at index %d moved to index %d", oldIndex, newIndex);
+	
+	NSNumber *color = [[colors objectAtIndex:oldIndex] retain];
+	[colors removeObjectAtIndex:oldIndex];
+	[colors insertObject:color atIndex:newIndex];
+	[color release];
 }
 
 - (void)dealloc {
     [_sidebar release];
+	[colors release];
     [super dealloc];
 }
-
 @end

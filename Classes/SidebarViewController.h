@@ -13,7 +13,11 @@
 <HSSidebarViewDelegate>
 {
     HSSidebarView *_sidebar;
+	
+	NSMutableArray *colors;
 }
 @property (nonatomic, retain) IBOutlet HSSidebarView *sidebar;
+
+- (IBAction)deleteSelection:(id)sender;
 
 @end
