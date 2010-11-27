@@ -18,6 +18,8 @@
 @property (retain) NSMutableArray *imageViews;
 @property (assign) BOOL initialized;
 
+@property (retain) NSTimer *dragScrollTimer;
+
 @property (retain) UIView *viewBeingDragged;
 @property (assign) NSInteger draggedViewOldIndex;
 @property (assign) CGFloat dragOffsetY;
@@ -40,6 +42,7 @@
 @synthesize draggedViewOldIndex;
 @synthesize dragOffsetY;
 @synthesize selectedIndex;
+@synthesize dragScrollTimer;
 @synthesize delegate;
 @synthesize rowHeight;
 
@@ -67,6 +70,8 @@
 	[imageViews release];
 	[viewBeingDragged release];
 	[selectionGradient release];
+	[dragScrollTimer invalidate];
+	[dragScrollTimer release];
 	[super dealloc];
 }
 
@@ -213,6 +218,7 @@
 		[_scrollView setContentOffset:newOffset animated:YES];
 	}
 	
+	[self recalculateScrollViewContentSize];
 	[self setNeedsLayout];
 }
 
@@ -280,8 +286,35 @@
 		[imageViews removeObject:viewBeingDragged];
 		[imageViews insertObject:viewBeingDragged atIndex:currentIndex];
 		[self setNeedsLayout];
+		
+		if (CGRectGetMaxY(_scrollView.bounds) - newPosition.y < 50) {
+			if (dragScrollTimer == nil) {
+				self.dragScrollTimer = [NSTimer scheduledTimerWithTimeInterval:0.1
+																		target:self
+																	  selector:@selector(scrollDown:)
+																	  userInfo:nil
+																	   repeats:YES];
+			}
+		}
+		else if (newPosition.y - CGRectGetMinY(_scrollView.bounds) < 50) {
+			if (dragScrollTimer == nil) {
+				self.dragScrollTimer = [NSTimer scheduledTimerWithTimeInterval:0.1
+																		target:self
+																	  selector:@selector(scrollUp:)
+																	  userInfo:nil
+																	   repeats:YES];
+			}
+		}
+		else {
+			[dragScrollTimer invalidate];
+			self.dragScrollTimer = nil;
+		}
 	}
 	else {
+		// Stop scrolling, if we were
+		[self.dragScrollTimer invalidate];
+		self.dragScrollTimer = nil;
+		
 		CGPoint finalPosition = [self imageViewCenterInScrollViewForIndex:currentIndex];
 		[UIView animateWithDuration:0.2
 						 animations:^{
@@ -304,6 +337,61 @@
 		self.dragOffsetY = 0;
 		self.viewBeingDragged = nil;
 	}
+}
+
+- (void)scrollWithDelta:(CGFloat)scrollDelta duration:(NSTimeInterval)duration {
+	
+	if (scrollDelta > 0) {
+		// Scrolling down; make sure we don't go beyond the end.
+		CGFloat contentBottom = _scrollView.contentSize.height;
+		CGFloat scrollBottom = CGRectGetMaxY(_scrollView.bounds);
+		
+		CGFloat availableContentSpace = contentBottom - scrollBottom;
+		if (availableContentSpace <= 0) {
+			scrollDelta = 0;
+		}
+		else if (availableContentSpace < scrollDelta) {
+			scrollDelta = availableContentSpace;
+		}
+	}
+	else {
+		// Scrolling up; make sure we don't go beyond the top.
+		CGFloat contentTop = _scrollView.contentOffset.y;
+		if (contentTop < (-1 * scrollDelta)) {
+			scrollDelta = -1 * contentTop;
+		}
+	}
+	
+	
+	if (scrollDelta != 0) {
+		CGPoint currentContentOffset = _scrollView.contentOffset;
+		CGPoint newOffset = CGPointMake(0, currentContentOffset.y + scrollDelta);
+		CGPoint newViewCenter = CGPointMake(viewBeingDragged.center.x, viewBeingDragged.center.y + scrollDelta);
+		
+		[UIView animateWithDuration:duration
+							  delay:0
+							options:UIViewAnimationOptionAllowUserInteraction | UIViewAnimationCurveLinear
+						 animations:^(void) {
+							 CGRect newBounds = {.origin = newOffset, .size = _scrollView.bounds.size};
+							 _scrollView.bounds = newBounds;
+							 viewBeingDragged.center = newViewCenter;
+						 }
+						 completion:^(BOOL finished) {
+							 NSUInteger newRow = newViewCenter.y / rowHeight; 
+							 [imageViews removeObject:viewBeingDragged];
+							 [imageViews insertObject:viewBeingDragged atIndex:newRow];
+							 [self setNeedsLayout];
+						 }];
+	}
+
+}
+
+- (void)scrollDown:(NSTimer *)timer {
+	[self scrollWithDelta:30 duration:[timer timeInterval]];
+}
+
+- (void)scrollUp:(NSTimer *)timer {
+	[self scrollWithDelta:-30 duration:[timer timeInterval]];
 }
 
 #pragma mark -
