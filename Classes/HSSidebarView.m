@@ -101,9 +101,9 @@
 	
 	self.selectionGradient = [CAGradientLayer layer];
 	
-	UIColor *baseColor = [UIColor blueColor];
-	UIColor *topColor = [baseColor colorWithAlphaComponent:0.9];
-	UIColor *bottomColor = [baseColor colorWithAlphaComponent:0.6];
+	UIColor *baseColor = [UIColor colorWithHue:0.666 saturation:0.75 brightness:0.8 alpha:1];
+	UIColor *topColor = [baseColor colorWithAlphaComponent:1];
+	UIColor *bottomColor = [baseColor colorWithAlphaComponent:0.75];
 	selectionGradient.colors = [NSArray arrayWithObjects:(id)[topColor CGColor], (id)[bottomColor CGColor], nil];
 	selectionGradient.bounds = CGRectMake(0, 0, _scrollView.bounds.size.width, rowHeight);
 	selectionGradient.hidden = YES;
@@ -120,7 +120,7 @@
 }
 
 - (void) setupInstanceVariables {
-	selectedIndex = 3;
+	selectedIndex = -1;
 	self.rowHeight = 80;
 	self.imageViews = [NSMutableArray array];
 	self.viewsForReuse = [NSMutableArray array];
