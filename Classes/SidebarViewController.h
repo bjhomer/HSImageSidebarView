@@ -10,7 +10,7 @@
 #import "HSSidebarView.h"
 
 @interface SidebarViewController : UIViewController 
-<HSSidebarViewDelegate>
+<HSSidebarViewDelegate, UIPopoverControllerDelegate>
 {
     HSSidebarView *_sidebar;
 	

@@ -20,6 +20,8 @@
 @property (assign) CGFloat rowHeight;
 @property (assign) NSInteger selectedIndex;
 
+- (CGRect)frameOfImageAtIndex:(NSUInteger)anIndex;
+
 - (BOOL)imageAtIndexIsVisible:(NSUInteger)anIndex;
 - (void)scrollRowAtIndexToVisible:(NSUInteger)anIndex;
 

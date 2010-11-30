@@ -7,9 +7,16 @@
 //
 
 #import "SidebarViewController.h"
+#import "PopoverController.h"
+
+@interface SidebarViewController ()
+@property (retain) UIPopoverController *popover;
+
+@end
 
 @implementation SidebarViewController
 @synthesize sidebar = _sidebar;
+@synthesize popover;
 
 
 
@@ -112,6 +119,21 @@
 
 -(void)sidebar:(HSSidebarView *)sidebar didTapImageAtIndex:(NSUInteger)anIndex {
 	NSLog(@"Touched selected image at index: %u", anIndex);
+	if (sidebar.selectedIndex == anIndex) {
+		PopoverController *content = [[PopoverController alloc] initWithNibName:@"PopoverController" bundle:nil];
+		content.attachedIndex = anIndex;
+		content.sidebar = sidebar;
+		
+		UIPopoverController *controller = [[UIPopoverController alloc] initWithContentViewController:content];
+		content.popoverController = controller;
+		controller.popoverContentSize = content.view.frame.size;
+		controller.delegate = self;
+		CGRect frame = [sidebar frameOfImageAtIndex:anIndex];
+		[controller presentPopoverFromRect:frame inView:sidebar permittedArrowDirections:UIPopoverArrowDirectionLeft animated:YES];
+
+		self.popover = controller;
+		[content release];
+	}
 }
 
 - (void)sidebar:(HSSidebarView *)sidebar didMoveImageAtIndex:(NSUInteger)oldIndex toIndex:(NSUInteger)newIndex {
@@ -124,6 +146,7 @@
 }
 
 - (void)dealloc {
+	[popover release];
     [_sidebar release];
 	[colors release];
     [super dealloc];

@@ -313,15 +313,22 @@
 	if (hitView == _scrollView) {
 		CGFloat hitY = [recognizer locationInView:_scrollView].y;
 		NSInteger newSelection = hitY / rowHeight;
-		if (newSelection != selectedIndex && newSelection < self.imageCount) {
-			self.selectedIndex = newSelection;
-		}
-		else {
+		
+		if (newSelection > self.imageCount - 1) {
 			self.selectedIndex = -1;
 		}
+		else {
 		
-		if ([delegate respondsToSelector:@selector(sidebar:didTapImageAtIndex:)]) {
-			[delegate sidebar:self didTapImageAtIndex:selectedIndex];
+			// Send the delegate method before changing selection state,
+			// so that the user can determine whether the tap was on an
+			// already-selected item by querying the selection state.
+			if ([delegate respondsToSelector:@selector(sidebar:didTapImageAtIndex:)]) {
+				[delegate sidebar:self didTapImageAtIndex:newSelection];
+			}
+			
+			if (newSelection != selectedIndex) {
+				self.selectedIndex = newSelection;
+			}
 		}
 	}
 }
@@ -505,6 +512,11 @@
 		[viewsForReuse removeLastObject];
 	}
 	return [view autorelease];	
+}
+
+- (CGRect)frameOfImageAtIndex:(NSUInteger)anIndex {
+	CGRect rectInScrollView = [self imageViewFrameInScrollViewForIndex:anIndex];
+	return [self convertRect:rectInScrollView fromView:_scrollView];
 }
 
 - (CGRect)imageViewFrameInScrollViewForIndex:(NSUInteger)anIndex {

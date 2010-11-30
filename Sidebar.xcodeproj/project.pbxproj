@@ -10,6 +10,8 @@
 		B71E114E129BA7870007B0BE /* Green.png in Resources */ = {isa = PBXBuildFile; fileRef = B71E114B129BA7870007B0BE /* Green.png */; };
 		B71E114F129BA7870007B0BE /* Blue.png in Resources */ = {isa = PBXBuildFile; fileRef = B71E114C129BA7870007B0BE /* Blue.png */; };
 		B71E1150129BA7870007B0BE /* Red.png in Resources */ = {isa = PBXBuildFile; fileRef = B71E114D129BA7870007B0BE /* Red.png */; };
+		B77397AE12A4E85C00CE0A4C /* PopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = B77397AC12A4E85C00CE0A4C /* PopoverController.m */; };
+		B77397AF12A4E85C00CE0A4C /* PopoverController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B77397AD12A4E85C00CE0A4C /* PopoverController.xib */; };
 		B7B80510129393C300EBE69D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B8050F129393C300EBE69D /* UIKit.framework */; };
 		B7B80512129393C300EBE69D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B80511129393C300EBE69D /* Foundation.framework */; };
 		B7B80514129393C300EBE69D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B80513129393C300EBE69D /* CoreGraphics.framework */; };
@@ -33,6 +35,9 @@
 		B71E114B129BA7870007B0BE /* Green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Green.png; sourceTree = "<group>"; };
 		B71E114C129BA7870007B0BE /* Blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Blue.png; sourceTree = "<group>"; };
 		B71E114D129BA7870007B0BE /* Red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Red.png; sourceTree = "<group>"; };
+		B77397AB12A4E85C00CE0A4C /* PopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopoverController.h; sourceTree = "<group>"; };
+		B77397AC12A4E85C00CE0A4C /* PopoverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopoverController.m; sourceTree = "<group>"; };
+		B77397AD12A4E85C00CE0A4C /* PopoverController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PopoverController.xib; sourceTree = "<group>"; };
 		B7B8050C129393C300EBE69D /* Sidebar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sidebar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7B8050F129393C300EBE69D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		B7B80511129393C300EBE69D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -104,6 +109,8 @@
 				B7B8051D129393C400EBE69D /* SidebarAppDelegate.m */,
 				B7B80522129393C400EBE69D /* SidebarViewController.h */,
 				B7B80523129393C400EBE69D /* SidebarViewController.m */,
+				B77397AB12A4E85C00CE0A4C /* PopoverController.h */,
+				B77397AC12A4E85C00CE0A4C /* PopoverController.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -121,6 +128,7 @@
 		B7B80506129393C300EBE69D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				B77397AD12A4E85C00CE0A4C /* PopoverController.xib */,
 				B71E114B129BA7870007B0BE /* Green.png */,
 				B71E114C129BA7870007B0BE /* Blue.png */,
 				B71E114D129BA7870007B0BE /* Red.png */,
@@ -248,6 +256,7 @@
 				B71E114E129BA7870007B0BE /* Green.png in Resources */,
 				B71E114F129BA7870007B0BE /* Blue.png in Resources */,
 				B71E1150129BA7870007B0BE /* Red.png in Resources */,
+				B77397AF12A4E85C00CE0A4C /* PopoverController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -287,6 +296,7 @@
 				B7B8051E129393C400EBE69D /* SidebarAppDelegate.m in Sources */,
 				B7B80524129393C400EBE69D /* SidebarViewController.m in Sources */,
 				B7B80549129395F800EBE69D /* HSSidebarView.m in Sources */,
+				B77397AE12A4E85C00CE0A4C /* PopoverController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
