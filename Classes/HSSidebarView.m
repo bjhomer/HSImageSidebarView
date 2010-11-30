@@ -16,6 +16,9 @@
 @property (retain) CAGradientLayer *selectionGradient;
 
 @property (retain) NSMutableArray *imageViews;
+@property (retain) NSMutableArray *viewsForReuse;
+@property (retain) NSMutableIndexSet *indexesToAnimate;
+
 @property (assign) BOOL initialized;
 
 @property (retain) NSTimer *dragScrollTimer;
@@ -28,14 +31,20 @@
 - (void)setupInstanceVariables;
 - (void)recalculateScrollViewContentSize;
 
+- (void)enqueueReusableImageView:(UIImageView *)view;
+- (UIImageView *)dequeueReusableImageView;
+
 - (CGRect)imageViewFrameInScrollViewForIndex:(NSUInteger)anIndex;
 - (CGPoint)imageViewCenterInScrollViewForIndex:(NSUInteger)anIndex;
 
 @end
 
 @implementation HSSidebarView
+
 @synthesize scrollView=_scrollView;
 @synthesize imageViews;
+@synthesize viewsForReuse;
+@synthesize indexesToAnimate;
 @synthesize selectionGradient;
 @synthesize initialized;
 @synthesize viewBeingDragged;
@@ -68,6 +77,8 @@
 - (void)dealloc {
 	[_scrollView release];
 	[imageViews release];
+	[viewsForReuse release];
+	[indexesToAnimate release];
 	[viewBeingDragged release];
 	[selectionGradient release];
 	[dragScrollTimer invalidate];
@@ -110,6 +121,8 @@
 	selectedIndex = 3;
 	self.rowHeight = 80;
 	self.imageViews = [NSMutableArray array];
+	self.viewsForReuse = [NSMutableArray array];
+	self.indexesToAnimate = [NSMutableIndexSet indexSet];
 }
 
 #pragma mark -
@@ -123,27 +136,55 @@
 	id noView = [NSNull null];
 	
 	NSIndexSet *visibleIndices = [self visibleIndices];
-	[visibleIndices enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {		
-		if ([imageViews objectAtIndex:idx] == noView) {
-			UIImage *image = [delegate sidebar:self imageForIndex:idx];
-			
-			UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-			imageView.frame = [self imageViewFrameInScrollViewForIndex:idx];
-			imageView.contentMode = UIViewContentModeScaleAspectFit;
-			[_scrollView addSubview:imageView];
-			imageView.alpha = 0;
-			[UIView animateWithDuration:0.2
-								  delay:0
-								options:UIViewAnimationOptionAllowUserInteraction
-							 animations:^{
-								 imageView.alpha = 1.0;
-							 }
-							 completion:NULL];
-			[self.imageViews replaceObjectAtIndex:idx withObject:imageView];
-			[imageView release];
+	
+	// Remove any off-screen views
+	NSMutableIndexSet *indexesToRelease = [NSMutableIndexSet indexSet];
+	[imageViews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+		if (obj != noView && [visibleIndices containsIndex:idx] == NO) {
+			[indexesToRelease addIndex:idx];
+			[self enqueueReusableImageView:obj];
+
 		}
 	}];
 	
+	[indexesToRelease enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+		[imageViews replaceObjectAtIndex:idx withObject:noView];
+	}];
+	
+	
+	// Load any views that need loading
+	[visibleIndices enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+		UIImageView *existingView = [imageViews objectAtIndex:idx];
+		if (existingView == noView) {
+			UIImage *image = [delegate sidebar:self imageForIndex:idx];
+			
+			UIImageView *imageView = [self dequeueReusableImageView];
+			if (imageView == nil) {
+				imageView = [[[UIImageView alloc] init] autorelease];
+			}
+			imageView.image = image;
+			
+			imageView.frame = [self imageViewFrameInScrollViewForIndex:idx];
+			imageView.contentMode = UIViewContentModeScaleAspectFit;
+			[_scrollView addSubview:imageView];
+			
+			if ([indexesToAnimate containsIndex:idx]) {
+				imageView.alpha = 0;
+				[UIView animateWithDuration:0.2
+									  delay:0
+									options:UIViewAnimationOptionAllowUserInteraction
+								 animations:^{
+									 imageView.alpha = 1.0;
+								 }
+								 completion:NULL];
+				[indexesToAnimate removeIndex:idx];
+			}
+			
+			[self.imageViews replaceObjectAtIndex:idx withObject:imageView];
+		}
+	}];
+	
+	// Position all the views in their new location
 	[UIView animateWithDuration:0.2
 						  delay:0
 						options:UIViewAnimationOptionAllowUserInteraction
@@ -190,6 +231,7 @@
 
 - (void)insertRowAtIndex:(NSUInteger)anIndex {
 	[imageViews insertObject:[NSNull null] atIndex:anIndex];
+	[indexesToAnimate addIndex:anIndex];
 	self.selectedIndex = anIndex;
 	
 	CGRect scrollBounds = _scrollView.bounds;
@@ -235,7 +277,7 @@
 
 - (void)deleteRowAtIndex:(NSUInteger)anIndex {
 	UIImageView *selectedView = [imageViews objectAtIndex:anIndex];
-	[selectedView removeFromSuperview];
+	[self enqueueReusableImageView:selectedView];
 	[imageViews removeObjectAtIndex:anIndex];
 
 	if (anIndex > selectedIndex || anIndex == self.imageCount) {
@@ -431,6 +473,21 @@
 }
 
 
+- (void)enqueueReusableImageView:(UIImageView *)view {
+	[viewsForReuse addObject:view];
+	
+	view.image = nil;
+	[view removeFromSuperview];
+}
+
+- (UIImageView *)dequeueReusableImageView {
+	UIImageView *view = [[viewsForReuse lastObject] retain];
+	if (view != nil) {
+		[viewsForReuse removeLastObject];
+	}
+	return [view autorelease];	
+}
+
 - (CGRect)imageViewFrameInScrollViewForIndex:(NSUInteger)anIndex {
 	CGFloat rowWidth = _scrollView.bounds.size.width;
 	CGFloat imageViewWidth =  rowWidth * 3.0 / 4.0;
@@ -454,11 +511,14 @@
 }
 
 - (NSIndexSet *)visibleIndices {
-	NSUInteger firstRow = _scrollView.contentOffset.y / rowHeight;
-	NSUInteger lastRow = (CGRectGetMaxY(_scrollView.bounds)) / rowHeight;
-	NSUInteger imageCount = self.imageCount;
+	NSInteger firstRow = _scrollView.contentOffset.y / rowHeight;
+	NSInteger lastRow = (CGRectGetMaxY(_scrollView.bounds)) / rowHeight;
+	NSInteger imageCount = self.imageCount;
 	if (lastRow > imageCount - 1 || imageCount == 0) {
 		lastRow = imageCount - 1;
+	}
+	if (firstRow < 0) {
+		firstRow = 0;
 	}
 	
 	return [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(firstRow, lastRow - firstRow + 1)];
