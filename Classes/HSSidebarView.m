@@ -18,6 +18,7 @@
 @property (retain) NSMutableArray *imageViews;
 @property (retain) NSMutableArray *viewsForReuse;
 @property (retain) NSMutableIndexSet *indexesToAnimate;
+@property (assign) BOOL shouldAnimateSelectionLayer;
 
 @property (assign) BOOL initialized;
 
@@ -45,6 +46,7 @@
 @synthesize imageViews;
 @synthesize viewsForReuse;
 @synthesize indexesToAnimate;
+@synthesize shouldAnimateSelectionLayer;
 @synthesize selectionGradient;
 @synthesize initialized;
 @synthesize viewBeingDragged;
@@ -199,8 +201,9 @@
 	
 	// Draw selection layer
 	if (selectedIndex >= 0) {
+		CFBooleanRef disableAnimations = shouldAnimateSelectionLayer ? kCFBooleanFalse : kCFBooleanTrue;
 		[CATransaction begin];
-		[CATransaction setValue:(id)kCFBooleanTrue
+		[CATransaction setValue:(id)disableAnimations
 						 forKey:kCATransactionDisableActions];
 		
 		selectionGradient.hidden = NO;
@@ -208,6 +211,9 @@
 											 _scrollView.bounds.size.width, 
 											 rowHeight);
 		[CATransaction commit];
+		
+		// If we should animate, it will explicitly be reset to YES later.
+		self.shouldAnimateSelectionLayer = NO;
 	}
 	else {
 		selectionGradient.hidden = YES;
@@ -229,13 +235,12 @@
 	[self setNeedsLayout];
 }
 
-- (void)insertRowAtIndex:(NSUInteger)anIndex {
-	[imageViews insertObject:[NSNull null] atIndex:anIndex];
-	[indexesToAnimate addIndex:anIndex];
-	self.selectedIndex = anIndex;
-	
+- (void)scrollRowAtIndexToVisible:(NSUInteger)anIndex {
+	if (anIndex > self.imageCount - 1) {
+		return;
+	}
 	CGRect scrollBounds = _scrollView.bounds;
-	CGRect imageFrame = [self imageViewFrameInScrollViewForIndex:self.selectedIndex];
+	CGRect imageFrame = [self imageViewFrameInScrollViewForIndex:anIndex];
 	
 	CGFloat scrollTop = CGRectGetMinY(scrollBounds);
 	CGFloat scrollBottom = CGRectGetMaxY(scrollBounds);
@@ -270,6 +275,16 @@
 		
 		[_scrollView setContentOffset:newOffset animated:YES];
 	}
+}
+
+- (void)insertRowAtIndex:(NSUInteger)anIndex {
+	[imageViews insertObject:[NSNull null] atIndex:anIndex];
+	[indexesToAnimate addIndex:anIndex];
+	
+	if (selectedIndex != -1 && anIndex < selectedIndex) {
+		self.selectedIndex += 1;
+		self.shouldAnimateSelectionLayer = YES;
+	}
 	
 	[self recalculateScrollViewContentSize];
 	[self setNeedsLayout];
@@ -280,8 +295,12 @@
 	[self enqueueReusableImageView:selectedView];
 	[imageViews removeObjectAtIndex:anIndex];
 
-	if (anIndex > selectedIndex || anIndex == self.imageCount) {
+	if (selectedIndex != -1 && anIndex < selectedIndex) {
 		self.selectedIndex -= 1;
+		self.shouldAnimateSelectionLayer = YES;
+	}
+	else if (selectedIndex == anIndex) {
+		self.selectedIndex = -1;
 	}
 	
 	[self recalculateScrollViewContentSize];

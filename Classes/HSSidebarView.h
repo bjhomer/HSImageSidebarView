@@ -21,6 +21,7 @@
 @property (assign) NSInteger selectedIndex;
 
 - (BOOL)imageAtIndexIsVisible:(NSUInteger)anIndex;
+- (void)scrollRowAtIndexToVisible:(NSUInteger)anIndex;
 
 - (void)insertRowAtIndex:(NSUInteger)anIndex;
 - (void)deleteRowAtIndex:(NSUInteger)anIndex;

@@ -68,13 +68,25 @@
 	[colors insertObject:[NSNumber numberWithInt:arc4random()%3]
 				 atIndex:insertionIndex];
 	[_sidebar insertRowAtIndex:insertionIndex];
+	[_sidebar scrollRowAtIndexToVisible:insertionIndex];
+	_sidebar.selectedIndex = insertionIndex;
 }
 
 - (IBAction)deleteSelection:(id)sender {
 	NSInteger selectedIndex = _sidebar.selectedIndex;
 	if (selectedIndex != -1) {
+		BOOL isLastRow = (selectedIndex == ([colors count] - 1));
 		[colors removeObjectAtIndex:selectedIndex];
 		[_sidebar deleteRowAtIndex:selectedIndex];
+		
+		if ([colors count] != 0) {
+			NSUInteger newSelection = selectedIndex;
+			if (isLastRow) {
+				newSelection = [colors count] - 1;
+			}
+			_sidebar.selectedIndex = newSelection;
+			[_sidebar scrollRowAtIndexToVisible:newSelection];
+		}
 	}
 }
 
