@@ -204,15 +204,26 @@
 	
 	if (imageTop < scrollTop) {
 		// It's off the top of the screen
-		CGFloat delta = scrollTop - imageTop + 10 + (rowHeight / 2);
+		CGFloat distanceBetweenFrameAndRowTop = (int)imageTop % (int)rowHeight;
+		CGFloat delta = scrollTop - imageTop + distanceBetweenFrameAndRowTop;
+		
+		if (anIndex != 0) {
+			// Show a bit of the previous row, if one exists
+			delta += (rowHeight / 2); 
+		}
 		CGPoint newOffset = CGPointMake(oldOffset.x, oldOffset.y - delta);
 		
 		[_scrollView setContentOffset:newOffset animated:YES];
 	}
 	else if (scrollBottom < imageBottom) {
 		// It's off the bottom of the screen
+		CGFloat distanceBetweenFrameAndRowBottom = rowHeight - ((int)imageBottom % (int)rowHeight);
 		
-		CGFloat delta = imageBottom - scrollBottom + 10 + (rowHeight / 2);
+		CGFloat delta = imageBottom - scrollBottom + distanceBetweenFrameAndRowBottom;
+		if (anIndex != [self imageCount] - 1) {
+			// Show a bit of the next row, if one exists.
+			delta += (rowHeight / 2);	
+		}
 		CGPoint newOffset = CGPointMake(oldOffset.x, oldOffset.y + delta);
 		
 		[_scrollView setContentOffset:newOffset animated:YES];
