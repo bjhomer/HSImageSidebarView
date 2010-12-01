@@ -7,7 +7,7 @@
 //
 
 #import "SidebarViewController.h"
-#import "PopoverController.h"
+#import "DeleteImagePopoverController.h"
 
 @interface SidebarViewController ()
 @property (retain) UIPopoverController *popover;
@@ -118,9 +118,9 @@
 }
 
 -(void)sidebar:(HSSidebarView *)sidebar didTapImageAtIndex:(NSUInteger)anIndex {
-	NSLog(@"Touched selected image at index: %u", anIndex);
+	NSLog(@"Touched image at index: %u", anIndex);
 	if (sidebar.selectedIndex == anIndex) {
-		PopoverController *content = [[PopoverController alloc] initWithNibName:@"PopoverController" bundle:nil];
+		DeleteImagePopoverController *content = [[DeleteImagePopoverController alloc] initWithNibName:@"DeleteImagePopoverController" bundle:nil];
 		content.attachedIndex = anIndex;
 		content.sidebar = sidebar;
 		

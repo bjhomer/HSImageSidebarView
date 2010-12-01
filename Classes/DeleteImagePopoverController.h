@@ -1,5 +1,5 @@
 //
-//  PopoverController.h
+//  DeleteImagePopoverController.h
 //  Sidebar
 //
 //  Created by BJ Homer on 11/30/10.
@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 @class HSSidebarView;
 
-@interface PopoverController : UIViewController {
+@interface DeleteImagePopoverController : UIViewController {
     
 }
 
