@@ -16,6 +16,7 @@
 @optional
 - (void)sidebar:(HSSidebarView *)sidebar didTapImageAtIndex:(NSUInteger)anIndex;
 - (void)sidebar:(HSSidebarView *)sidebar didMoveImageAtIndex:(NSUInteger)oldIndex toIndex:(NSUInteger)newIndex;
+- (void)sidebar:(HSSidebarView *)sidebar didRemoveImageAtIndex:(NSUInteger)anIndex;
 
 #pragma mark -
 #pragma mark Data source methods

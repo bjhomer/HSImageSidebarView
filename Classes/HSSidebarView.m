@@ -26,7 +26,7 @@
 
 @property (retain) UIView *viewBeingDragged;
 @property (assign) NSInteger draggedViewOldIndex;
-@property (assign) CGFloat dragOffsetY;
+@property (assign) CGPoint dragOffset;
 
 - (void)setupViewHierarchy;
 - (void)setupInstanceVariables;
@@ -51,7 +51,7 @@
 @synthesize initialized;
 @synthesize viewBeingDragged;
 @synthesize draggedViewOldIndex;
-@synthesize dragOffsetY;
+@synthesize dragOffset;
 @synthesize selectedIndex;
 @synthesize dragScrollTimer;
 @synthesize delegate;
@@ -97,6 +97,7 @@
 	
 	_scrollView.backgroundColor = [UIColor scrollViewTexturedBackgroundColor];
 	_scrollView.alwaysBounceVertical = YES;
+	_scrollView.clipsToBounds = NO;
 	[self addSubview:_scrollView];
 	
 	self.selectionGradient = [CAGradientLayer layer];
@@ -142,7 +143,7 @@
 	// Remove any off-screen views
 	NSMutableIndexSet *indexesToRelease = [NSMutableIndexSet indexSet];
 	[imageViews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-		if (obj != noView && [visibleIndices containsIndex:idx] == NO) {
+		if (obj != noView && obj != viewBeingDragged && [visibleIndices containsIndex:idx] == NO) {
 			[indexesToRelease addIndex:idx];
 			[self enqueueReusableImageView:obj];
 
@@ -334,19 +335,23 @@
 }
 
 - (void)pressedSidebar:(UILongPressGestureRecognizer *)recognizer {
-	CGFloat hitY = [recognizer locationInView:_scrollView].y;
-	NSInteger currentIndex = hitY / rowHeight;
+	CGPoint hitPoint = [recognizer locationInView:_scrollView];
+	BOOL isInScrollView = CGRectContainsPoint([_scrollView bounds], hitPoint);
+	NSInteger newIndex = hitPoint.y / rowHeight;
 	
-	if (currentIndex > self.imageCount - 1) {
-		currentIndex = self.imageCount - 1;
+	if (newIndex > self.imageCount - 1) {
+		newIndex = self.imageCount - 1;
 	}
-	else if (currentIndex < 0) {
-		currentIndex = 0;
+	else if (newIndex < 0) {
+		newIndex = 0;
 	}
 	
-	UIImageView *hitView = [self.imageViews objectAtIndex:currentIndex];
+	if (isInScrollView == NO) {
+		newIndex = self.draggedViewOldIndex;
+	}
 	
 	if (recognizer.state == UIGestureRecognizerStateBegan) {
+		UIImageView *hitView = [self.imageViews objectAtIndex:newIndex];
 		self.selectedIndex = -1;
 		[UIView animateWithDuration:0.1
 						 animations:^{
@@ -355,38 +360,48 @@
 						 }
 		 ];
 		self.viewBeingDragged = hitView;
-		self.draggedViewOldIndex = currentIndex;
-		self.dragOffsetY = hitY - [self imageViewCenterInScrollViewForIndex:currentIndex].y;
+		self.draggedViewOldIndex = newIndex;
+		self.dragOffset = CGPointMake(hitPoint.x - hitView.center.x, hitPoint.y - hitView.center.y);
 		[_scrollView bringSubviewToFront:viewBeingDragged];
 	}
 	else if (recognizer.state == UIGestureRecognizerStateChanged) {
-		CGPoint newPosition = [recognizer locationInView:_scrollView]; 
-		viewBeingDragged.center = CGPointMake(viewBeingDragged.center.x, newPosition.y - self.dragOffsetY);
-		[imageViews removeObject:viewBeingDragged];
-		[imageViews insertObject:viewBeingDragged atIndex:currentIndex];
-		[self setNeedsLayout];
-		
-		if (CGRectGetMaxY(_scrollView.bounds) - newPosition.y < 50) {
-			if (dragScrollTimer == nil) {
-				self.dragScrollTimer = [NSTimer scheduledTimerWithTimeInterval:0.1
-																		target:self
-																	  selector:@selector(scrollDown:)
-																	  userInfo:nil
-																	   repeats:YES];
-			}
-		}
-		else if (newPosition.y - CGRectGetMinY(_scrollView.bounds) < 50) {
-			if (dragScrollTimer == nil) {
-				self.dragScrollTimer = [NSTimer scheduledTimerWithTimeInterval:0.1
-																		target:self
-																	  selector:@selector(scrollUp:)
-																	  userInfo:nil
-																	   repeats:YES];
-			}
-		}
-		else {
+		viewBeingDragged.center = CGPointMake(hitPoint.x - self.dragOffset.x, hitPoint.y - self.dragOffset.y);
+		if (isInScrollView == NO) {
+			// Don't scroll if we're not over the scrollview
 			[dragScrollTimer invalidate];
 			self.dragScrollTimer = nil;
+			
+			[imageViews removeObject:viewBeingDragged];
+			[self setNeedsLayout];
+		}
+		else {
+			[imageViews removeObject:viewBeingDragged];
+			[imageViews insertObject:viewBeingDragged atIndex:newIndex];
+			[self setNeedsLayout];
+			
+		
+			if (CGRectGetMaxY(_scrollView.bounds) - hitPoint.y < 50) {
+				if (dragScrollTimer == nil) {
+					self.dragScrollTimer = [NSTimer scheduledTimerWithTimeInterval:0.1
+																			target:self
+																		  selector:@selector(scrollDown:)
+																		  userInfo:nil
+																		   repeats:YES];
+				}
+			}
+			else if (hitPoint.y - CGRectGetMinY(_scrollView.bounds) < 50) {
+				if (dragScrollTimer == nil) {
+					self.dragScrollTimer = [NSTimer scheduledTimerWithTimeInterval:0.1
+																			target:self
+																		  selector:@selector(scrollUp:)
+																		  userInfo:nil
+																		   repeats:YES];
+				}
+			}
+			else {
+				[dragScrollTimer invalidate];
+				self.dragScrollTimer = nil;
+			}
 		}
 	}
 	else {
@@ -394,26 +409,49 @@
 		[self.dragScrollTimer invalidate];
 		self.dragScrollTimer = nil;
 		
-		CGPoint finalPosition = [self imageViewCenterInScrollViewForIndex:currentIndex];
-		[UIView animateWithDuration:0.2
-						 animations:^{
-							 viewBeingDragged.center = finalPosition;
-							 viewBeingDragged.alpha = 1.0;
-							 viewBeingDragged.transform = CGAffineTransformIdentity;
-						 }
-						 completion:^(BOOL finished){
-							 self.selectedIndex = currentIndex;
-							 [self setNeedsLayout];
-						 }];
-		[imageViews removeObject:viewBeingDragged];
-		[imageViews insertObject:viewBeingDragged atIndex:currentIndex];
+		CGPoint pointInWindow = [self convertPoint:hitPoint toView:nil];
+		CGRect deleteZone = CGRectInset(self.window.bounds, 40, 40);
 		
-		if ([delegate respondsToSelector:@selector(sidebar:didMoveImageAtIndex:toIndex:)]) {
-			[delegate sidebar:self didMoveImageAtIndex:self.draggedViewOldIndex toIndex:currentIndex];
+		if (isInScrollView || CGRectContainsPoint(deleteZone, pointInWindow) == NO) {
+			CGPoint finalPosition = [self imageViewCenterInScrollViewForIndex:newIndex];
+			[UIView animateWithDuration:0.2
+							 animations:^{
+								 viewBeingDragged.center = finalPosition;
+								 viewBeingDragged.alpha = 1.0;
+								 viewBeingDragged.transform = CGAffineTransformIdentity;
+							 }
+							 completion:^(BOOL finished){
+								 self.selectedIndex = newIndex;
+								 [self setNeedsLayout];
+							 }];
+			[imageViews removeObject:viewBeingDragged];
+			[imageViews insertObject:viewBeingDragged atIndex:newIndex];
+			
+			if (draggedViewOldIndex != newIndex && [delegate respondsToSelector:@selector(sidebar:didMoveImageAtIndex:toIndex:)]) {
+				[delegate sidebar:self didMoveImageAtIndex:draggedViewOldIndex toIndex:newIndex];
+			}
+		}
+		else {
+			[UIView animateWithDuration:0.2
+								  delay:0
+								options:UIViewAnimationCurveEaseOut
+							 animations:^{
+								 viewBeingDragged.transform = CGAffineTransformMakeScale(4.0, 4.0);
+								 viewBeingDragged.alpha = 0.0;
+							 }
+							 completion:^(BOOL finished) {
+								 self.selectedIndex = -1;
+								 [self setNeedsLayout];
+							 }];
+			[imageViews removeObject:viewBeingDragged];
+			
+			if ([delegate respondsToSelector:@selector(sidebar:didRemoveImageAtIndex:)]) {
+				[delegate sidebar:self didRemoveImageAtIndex:self.draggedViewOldIndex];
+			}
 		}
 		
 		self.draggedViewOldIndex = -1;
-		self.dragOffsetY = 0;
+		self.dragOffset = CGPointZero;
 		self.viewBeingDragged = nil;
 	}
 }

@@ -145,6 +145,11 @@
 	[color release];
 }
 
+- (void)sidebar:(HSSidebarView *)sidebar didRemoveImageAtIndex:(NSUInteger)anIndex {
+	NSLog(@"Image at index %d removed", anIndex);
+	[colors removeObjectAtIndex:anIndex];
+}
+
 - (void)dealloc {
 	[popover release];
     [_sidebar release];
