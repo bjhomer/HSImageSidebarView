@@ -192,7 +192,8 @@
 						  delay:0
 						options:UIViewAnimationOptionAllowUserInteraction
 					 animations:^{
-						 [imageViews enumerateObjectsUsingBlock:^(UIView *view, NSUInteger idx, BOOL *stop) {
+						 [imageViews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+							 UIView *view = obj;
 							 if (view != noView && view != self.viewBeingDragged) {
 								 view.center = [self imageViewCenterInScrollViewForIndex:idx];
 							 }
