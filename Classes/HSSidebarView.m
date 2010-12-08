@@ -21,6 +21,7 @@
 @property (assign) BOOL shouldAnimateSelectionLayer;
 
 @property (assign) BOOL initialized;
+@property (assign) BOOL isHorizontal;
 
 @property (retain) NSTimer *dragScrollTimer;
 
@@ -56,21 +57,22 @@
 @synthesize dragScrollTimer;
 @synthesize delegate;
 @synthesize rowHeight;
+@synthesize isHorizontal;
 
 #pragma mark -
 - (id)initWithFrame:(CGRect)frame {
 	if ((self = [super initWithFrame:frame])) {
 		// Initialization code
-		[self setupViewHierarchy];
 		[self setupInstanceVariables];
+		[self setupViewHierarchy];
 	}
 	return self;
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
 	if ((self = [super initWithCoder:aDecoder])) {
-		[self setupViewHierarchy];
 		[self setupInstanceVariables];
+		[self setupViewHierarchy];
 	}
 	return self;
 }
@@ -92,11 +94,24 @@
 #pragma mark Setup
 
 - (void) setupViewHierarchy {
+	
 	self.scrollView = [[[UIScrollView alloc] initWithFrame:self.bounds] autorelease];
-	[_scrollView setAutoresizingMask: UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleHeight];
+	if (self.bounds.size.width > self.bounds.size.height) {
+		isHorizontal = YES;
+		[_scrollView setAutoresizingMask: UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth];
+	}
+	else {
+		[_scrollView setAutoresizingMask: UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleHeight];
+	}
+
 	
 	_scrollView.backgroundColor = [UIColor scrollViewTexturedBackgroundColor];
-	_scrollView.alwaysBounceVertical = YES;
+	if (isHorizontal == NO) {
+		_scrollView.alwaysBounceVertical = YES;
+	}
+	else {
+		_scrollView.alwaysBounceHorizontal = YES;
+	}
 	_scrollView.clipsToBounds = NO;
 	[self addSubview:_scrollView];
 	
@@ -106,7 +121,12 @@
 	UIColor *topColor = [baseColor colorWithAlphaComponent:1];
 	UIColor *bottomColor = [baseColor colorWithAlphaComponent:0.75];
 	selectionGradient.colors = [NSArray arrayWithObjects:(id)[topColor CGColor], (id)[bottomColor CGColor], nil];
-	selectionGradient.bounds = CGRectMake(0, 0, _scrollView.bounds.size.width, rowHeight);
+	if (isHorizontal) {
+		selectionGradient.bounds = CGRectMake(0, 0, rowHeight, _scrollView.bounds.size.height);
+	}
+	else {
+		selectionGradient.bounds = CGRectMake(0, 0, _scrollView.bounds.size.width, rowHeight);
+	}
 	selectionGradient.hidden = YES;
 	
 	[_scrollView.layer addSublayer:selectionGradient];
@@ -209,9 +229,7 @@
 						 forKey:kCATransactionDisableActions];
 		
 		selectionGradient.hidden = NO;
-		selectionGradient.frame = CGRectMake(0, rowHeight * selectedIndex,
-											 _scrollView.bounds.size.width, 
-											 rowHeight);
+		selectionGradient.position = [self imageViewCenterInScrollViewForIndex:selectedIndex];
 		[CATransaction commit];
 		
 		// If we should animate, it will explicitly be reset to YES later.
@@ -223,7 +241,12 @@
 }
 
 - (void)recalculateScrollViewContentSize {
-	_scrollView.contentSize = CGSizeMake(_scrollView.bounds.size.width, self.imageCount*rowHeight);
+	if (isHorizontal) {
+		_scrollView.contentSize = CGSizeMake(self.imageCount*rowHeight, _scrollView.bounds.size.height);
+	}
+	else {
+		_scrollView.contentSize = CGSizeMake(_scrollView.bounds.size.width, self.imageCount*rowHeight);
+	}
 }
 
 - (void) reloadData {
@@ -244,38 +267,75 @@
 	CGRect scrollBounds = _scrollView.bounds;
 	CGRect imageFrame = [self imageViewFrameInScrollViewForIndex:anIndex];
 	
-	CGFloat scrollTop = CGRectGetMinY(scrollBounds);
-	CGFloat scrollBottom = CGRectGetMaxY(scrollBounds);
-	CGFloat imageTop = CGRectGetMinY(imageFrame);
-	CGFloat imageBottom = CGRectGetMaxY(imageFrame);
-	
-	CGPoint oldOffset = _scrollView.contentOffset;
-	
-	if (imageTop < scrollTop) {
-		// It's off the top of the screen
-		CGFloat distanceBetweenFrameAndRowTop = (int)imageTop % (int)rowHeight;
-		CGFloat delta = scrollTop - imageTop + distanceBetweenFrameAndRowTop;
+	if (isHorizontal == NO) {
+		CGFloat scrollTop = CGRectGetMinY(scrollBounds);
+		CGFloat scrollBottom = CGRectGetMaxY(scrollBounds);
+		CGFloat imageTop = CGRectGetMinY(imageFrame);
+		CGFloat imageBottom = CGRectGetMaxY(imageFrame);
 		
-		if (anIndex != 0) {
-			// Show a bit of the previous row, if one exists
-			delta += (rowHeight / 2); 
+		CGPoint oldOffset = _scrollView.contentOffset;
+		
+		if (imageTop < scrollTop) {
+			// It's off the top of the screen
+			CGFloat distanceBetweenFrameAndRowTop = (int)imageTop % (int)rowHeight;
+			CGFloat delta = scrollTop - imageTop + distanceBetweenFrameAndRowTop;
+			
+			if (anIndex != 0) {
+				// Show a bit of the previous row, if one exists
+				delta += (rowHeight / 2); 
+			}
+			CGPoint newOffset = CGPointMake(oldOffset.x, oldOffset.y - delta);
+			
+			[_scrollView setContentOffset:newOffset animated:YES];
 		}
-		CGPoint newOffset = CGPointMake(oldOffset.x, oldOffset.y - delta);
-		
-		[_scrollView setContentOffset:newOffset animated:YES];
+		else if (scrollBottom < imageBottom) {
+			// It's off the bottom of the screen
+			CGFloat distanceBetweenFrameAndRowBottom = rowHeight - ((int)imageBottom % (int)rowHeight);
+			
+			CGFloat delta = imageBottom - scrollBottom + distanceBetweenFrameAndRowBottom;
+			if (anIndex != [self imageCount] - 1) {
+				// Show a bit of the next row, if one exists.
+				delta += (rowHeight / 2);	
+			}
+			CGPoint newOffset = CGPointMake(oldOffset.x, oldOffset.y + delta);
+			
+			[_scrollView setContentOffset:newOffset animated:YES];
+		}
 	}
-	else if (scrollBottom < imageBottom) {
-		// It's off the bottom of the screen
-		CGFloat distanceBetweenFrameAndRowBottom = rowHeight - ((int)imageBottom % (int)rowHeight);
+	else {
+		CGFloat scrollLeft = CGRectGetMinX(scrollBounds);
+		CGFloat scrollRight = CGRectGetMaxX(scrollBounds);
+		CGFloat imageLeft = CGRectGetMinX(imageFrame);
+		CGFloat imageRight = CGRectGetMaxX(imageFrame);
 		
-		CGFloat delta = imageBottom - scrollBottom + distanceBetweenFrameAndRowBottom;
-		if (anIndex != [self imageCount] - 1) {
-			// Show a bit of the next row, if one exists.
-			delta += (rowHeight / 2);	
+		CGPoint oldOffset = _scrollView.contentOffset;
+		
+		if (imageLeft < scrollLeft) {
+			// It's off the top of the screen
+			CGFloat distanceBetweenFrameAndRowLeft = (int)imageLeft % (int)rowHeight;
+			CGFloat delta = scrollLeft - imageLeft + distanceBetweenFrameAndRowLeft;
+			
+			if (anIndex != 0) {
+				// Show a bit of the previous row, if one exists
+				delta += (rowHeight / 2); 
+			}
+			CGPoint newOffset = CGPointMake(oldOffset.x - delta, oldOffset.y);
+			
+			[_scrollView setContentOffset:newOffset animated:YES];
 		}
-		CGPoint newOffset = CGPointMake(oldOffset.x, oldOffset.y + delta);
-		
-		[_scrollView setContentOffset:newOffset animated:YES];
+		else if (scrollRight < imageRight) {
+			// It's off the bottom of the screen
+			CGFloat distanceBetweenFrameAndRowRight = rowHeight - ((int)imageRight % (int)rowHeight);
+			
+			CGFloat delta = imageRight - scrollRight + distanceBetweenFrameAndRowRight;
+			if (anIndex != [self imageCount] - 1) {
+				// Show a bit of the next row, if one exists.
+				delta += (rowHeight / 2);	
+			}
+			CGPoint newOffset = CGPointMake(oldOffset.x + delta, oldOffset.y);
+			
+			[_scrollView setContentOffset:newOffset animated:YES];
+		}
 	}
 }
 
@@ -294,7 +354,9 @@
 
 - (void)deleteRowAtIndex:(NSUInteger)anIndex {
 	UIImageView *selectedView = [imageViews objectAtIndex:anIndex];
-	[self enqueueReusableImageView:selectedView];
+	if ([selectedView isKindOfClass:[NSNull class]] == NO) {
+		[self enqueueReusableImageView:selectedView];
+	}
 	[imageViews removeObjectAtIndex:anIndex];
 
 	if (selectedIndex != -1 && anIndex < selectedIndex) {
@@ -313,8 +375,8 @@
 - (void)tappedSidebar:(UITapGestureRecognizer *)recognizer  {
 	UIView *hitView = [self hitTest:[recognizer locationInView:self] withEvent:nil];
 	if (hitView == _scrollView) {
-		CGFloat hitY = [recognizer locationInView:_scrollView].y;
-		NSInteger newSelection = hitY / rowHeight;
+		CGPoint hitPoint = [recognizer locationInView:_scrollView];
+		NSInteger newSelection = ((isHorizontal ? hitPoint.x : hitPoint.y) / rowHeight);
 		
 		if (newSelection > self.imageCount - 1) {
 			self.selectedIndex = -1;
@@ -338,7 +400,7 @@
 - (void)pressedSidebar:(UILongPressGestureRecognizer *)recognizer {
 	CGPoint hitPoint = [recognizer locationInView:_scrollView];
 	BOOL isInScrollView = CGRectContainsPoint([_scrollView bounds], hitPoint);
-	NSInteger newIndex = hitPoint.y / rowHeight;
+	NSInteger newIndex = (isHorizontal ? hitPoint.x : hitPoint.y) / rowHeight;
 	
 	if (newIndex > self.imageCount - 1) {
 		newIndex = self.imageCount - 1;
@@ -495,7 +557,7 @@
 							 viewBeingDragged.center = newViewCenter;
 						 }
 						 completion:^(BOOL finished) {
-							 NSUInteger newRow = newViewCenter.y / rowHeight; 
+							 NSUInteger newRow = (isHorizontal ? newViewCenter.x : newViewCenter.y) / rowHeight; 
 							 [imageViews removeObject:viewBeingDragged];
 							 [imageViews insertObject:viewBeingDragged atIndex:newRow];
 							 [self setNeedsLayout];
@@ -559,19 +621,39 @@
 }
 
 - (CGRect)imageViewFrameInScrollViewForIndex:(NSUInteger)anIndex {
-	CGFloat rowWidth = _scrollView.bounds.size.width;
-	CGFloat imageViewWidth =  rowWidth * 3.0 / 4.0;
-	CGFloat imageViewHeight = rowHeight * 3.0 / 4.0;
-	
-	CGFloat imageOriginX = (rowWidth - imageViewWidth) / 2.0;
-	CGFloat imageOriginY = (rowHeight - imageViewHeight) / 2.0;
+	if (isHorizontal == NO) {
+		CGFloat rowWidth = _scrollView.bounds.size.width;
+		CGFloat imageViewWidth =  rowWidth * 3.0 / 4.0;
+		CGFloat imageViewHeight = rowHeight * 3.0 / 4.0;
 		
-	return CGRectMake(imageOriginX, rowHeight*anIndex + imageOriginY, imageViewWidth, imageViewHeight);
+		CGFloat imageOriginX = (rowWidth - imageViewWidth) / 2.0;
+		CGFloat imageOriginY = (rowHeight - imageViewHeight) / 2.0;
+			
+		return CGRectMake(imageOriginX, rowHeight*anIndex + imageOriginY, imageViewWidth, imageViewHeight);
+	}
+	else {
+		CGFloat rowTallness = _scrollView.bounds.size.height;
+		CGFloat imageViewHeight = rowTallness * 3.0 / 4.0;
+		CGFloat imageViewWidth = rowHeight * 3.0 / 4.0;
+
+		CGFloat imageOriginX = (rowTallness - imageViewWidth) / 2.0;
+		CGFloat imageOriginY = (rowHeight - imageViewHeight) / 2.0;
+		
+		return CGRectMake(rowHeight*anIndex + imageOriginX, imageOriginY, imageViewWidth, imageViewHeight);
+	}
 }
 
 - (CGPoint)imageViewCenterInScrollViewForIndex:(NSUInteger)anIndex {
-	CGFloat imageViewCenterX = CGRectGetMidX(_scrollView.bounds);
-	CGFloat imageViewCenterY = rowHeight * anIndex + (rowHeight / 2.0);
+	CGFloat imageViewCenterX = 0;
+	CGFloat imageViewCenterY = 0;
+	if (isHorizontal == NO) {
+		imageViewCenterX = CGRectGetMidX(_scrollView.bounds);
+		imageViewCenterY = rowHeight * anIndex + (rowHeight / 2.0);
+	}
+	else {
+		imageViewCenterX = rowHeight * anIndex + (rowHeight / 2.0);
+		imageViewCenterY = CGRectGetMidY(_scrollView.bounds);
+	}
 	return CGPointMake(imageViewCenterX, imageViewCenterY);
 }
 
@@ -581,8 +663,16 @@
 }
 
 - (NSIndexSet *)visibleIndices {
-	NSInteger firstRow = _scrollView.contentOffset.y / rowHeight;
-	NSInteger lastRow = (CGRectGetMaxY(_scrollView.bounds)) / rowHeight;
+	NSInteger firstRow = 0;
+	NSInteger lastRow = 0;
+	if (isHorizontal == NO) {
+		firstRow = _scrollView.contentOffset.y / rowHeight;
+		lastRow = (CGRectGetMaxY(_scrollView.bounds)) / rowHeight;
+	}
+	else {
+		firstRow = _scrollView.contentOffset.x / rowHeight;
+		lastRow = (CGRectGetMaxX(_scrollView.bounds)) / rowHeight;
+	}
 	NSInteger imageCount = self.imageCount;
 	if (lastRow > imageCount - 1 || imageCount == 0) {
 		lastRow = imageCount - 1;

@@ -35,7 +35,7 @@
 		B71E114B129BA7870007B0BE /* Green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Green.png; sourceTree = "<group>"; };
 		B71E114C129BA7870007B0BE /* Blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Blue.png; sourceTree = "<group>"; };
 		B71E114D129BA7870007B0BE /* Red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Red.png; sourceTree = "<group>"; };
-		B77397AB12A4E85C00CE0A4C /* DeleteImagePopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = DeleteImagePopoverController.h; sourceTree = "<group>"; };
+		B77397AB12A4E85C00CE0A4C /* DeleteImagePopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeleteImagePopoverController.h; sourceTree = "<group>"; };
 		B77397AC12A4E85C00CE0A4C /* DeleteImagePopoverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeleteImagePopoverController.m; sourceTree = "<group>"; };
 		B77397AD12A4E85C00CE0A4C /* DeleteImagePopoverController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeleteImagePopoverController.xib; sourceTree = "<group>"; };
 		B7B8050C129393C300EBE69D /* Sidebar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sidebar.app; sourceTree = BUILT_PRODUCTS_DIR; };
