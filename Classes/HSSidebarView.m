@@ -188,6 +188,7 @@
 			imageView.image = image;
 			
 			imageView.frame = [self imageViewFrameInScrollViewForIndex:idx];
+			imageView.transform = CGAffineTransformIdentity;
 			imageView.contentMode = UIViewContentModeScaleAspectFit;
 			[_scrollView addSubview:imageView];
 			
@@ -472,10 +473,9 @@
 		[self.dragScrollTimer invalidate];
 		self.dragScrollTimer = nil;
 		
-		CGPoint pointInWindow = [self convertPoint:hitPoint toView:nil];
-		CGRect deleteZone = CGRectInset(self.window.bounds, 40, 40);
+		CGRect safeZone = CGRectInset(_scrollView.bounds, -30, -30);
 		
-		if (isInScrollView || CGRectContainsPoint(deleteZone, pointInWindow) == NO) {
+		if (isInScrollView || CGRectContainsPoint(safeZone, hitPoint)) {
 			CGPoint finalPosition = [self imageViewCenterInScrollViewForIndex:newIndex];
 			[UIView animateWithDuration:0.2
 							 animations:^{
@@ -504,6 +504,9 @@
 							 }
 							 completion:^(BOOL finished) {
 								 self.selectedIndex = -1;
+								 [UIView animateWithDuration:0.2 animations:^{
+									 [self recalculateScrollViewContentSize];
+								 }];
 								 [self setNeedsLayout];
 							 }];
 			[imageViews removeObject:viewBeingDragged];
