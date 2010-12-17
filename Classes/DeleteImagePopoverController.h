@@ -7,14 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-@class HSSidebarView;
+@class HSImageSidebarView;
 
 @interface DeleteImagePopoverController : UIViewController {
     
 }
 
 @property (assign) NSUInteger attachedIndex;
-@property (retain) HSSidebarView *sidebar;
+@property (retain) HSImageSidebarView *sidebar;
 @property (assign) UIPopoverController *popoverController;
 
 - (IBAction)delete:(id)sender;

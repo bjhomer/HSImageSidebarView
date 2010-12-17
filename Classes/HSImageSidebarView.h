@@ -1,5 +1,5 @@
 //
-//  HSSidebarView.h
+//  HSImageSidebarView.h
 //  Sidebar
 //
 //  Created by BJ Homer on 11/16/10.
@@ -7,16 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HSSidebarViewDelegate.h"
+#import "HSImageSidebarViewDelegate.h"
 
 
-@interface HSSidebarView : UIView {
+@interface HSImageSidebarView : UIView {
 }
 
 @property (readonly) NSUInteger imageCount;
 @property (readonly) NSIndexSet *visibleIndices;
 
-@property (assign) id<HSSidebarViewDelegate> delegate;
+@property (assign) id<HSImageSidebarViewDelegate> delegate;
 @property (assign) CGFloat rowHeight;
 @property (assign) NSInteger selectedIndex;
 

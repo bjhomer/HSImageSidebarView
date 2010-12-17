@@ -7,16 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HSSidebarView.h"
+#import "HSImageSidebarView.h"
 
 @interface SidebarViewController : UIViewController 
-<HSSidebarViewDelegate, UIPopoverControllerDelegate>
+<HSImageSidebarViewDelegate, UIPopoverControllerDelegate>
 {
-    HSSidebarView *_sidebar;
+    HSImageSidebarView *_sidebar;
 	
 	NSMutableArray *colors;
 }
-@property (nonatomic, retain) IBOutlet HSSidebarView *sidebar;
+@property (nonatomic, retain) IBOutlet HSImageSidebarView *sidebar;
 
 - (IBAction)insertRow:(id)sender;
 - (IBAction)deleteSelection:(id)sender;

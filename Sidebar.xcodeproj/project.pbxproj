@@ -27,7 +27,7 @@
 		B7B80535129393C400EBE69D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B7B80534129393C400EBE69D /* InfoPlist.strings */; };
 		B7B80537129393C400EBE69D /* SidebarTests.h in Resources */ = {isa = PBXBuildFile; fileRef = B7B80536129393C400EBE69D /* SidebarTests.h */; };
 		B7B80539129393C400EBE69D /* SidebarTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B80538129393C400EBE69D /* SidebarTests.m */; };
-		B7B80549129395F800EBE69D /* HSSidebarView.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B80548129395F800EBE69D /* HSSidebarView.m */; };
+		B7B80549129395F800EBE69D /* HSImageSidebarView.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B80548129395F800EBE69D /* HSImageSidebarView.m */; };
 		B7D4B0B31294F30E00BC0A01 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D4B0B21294F30E00BC0A01 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
@@ -58,9 +58,9 @@
 		B7B80534129393C400EBE69D /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = en.lproj/SidebarTests/InfoPlist.strings; sourceTree = "<group>"; };
 		B7B80536129393C400EBE69D /* SidebarTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SidebarTests.h; sourceTree = "<group>"; };
 		B7B80538129393C400EBE69D /* SidebarTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SidebarTests.m; sourceTree = "<group>"; };
-		B7B80547129395F800EBE69D /* HSSidebarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSSidebarView.h; sourceTree = "<group>"; };
-		B7B80548129395F800EBE69D /* HSSidebarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSSidebarView.m; sourceTree = "<group>"; };
-		B7B8054A12939ADD00EBE69D /* HSSidebarViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSSidebarViewDelegate.h; sourceTree = "<group>"; };
+		B7B80547129395F800EBE69D /* HSImageSidebarView.h */ = {isa = PBXFileReference; fileEncoding = 4; path = HSImageSidebarView.h; sourceTree = "<group>"; };
+		B7B80548129395F800EBE69D /* HSImageSidebarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSImageSidebarView.m; sourceTree = "<group>"; };
+		B7B8054A12939ADD00EBE69D /* HSImageSidebarViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; path = HSImageSidebarViewDelegate.h; sourceTree = "<group>"; };
 		B7D4B0B21294F30E00BC0A01 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -174,9 +174,9 @@
 		B7B80546129394EA00EBE69D /* HSSidebarView */ = {
 			isa = PBXGroup;
 			children = (
-				B7B80547129395F800EBE69D /* HSSidebarView.h */,
-				B7B80548129395F800EBE69D /* HSSidebarView.m */,
-				B7B8054A12939ADD00EBE69D /* HSSidebarViewDelegate.h */,
+				B7B80547129395F800EBE69D /* HSImageSidebarView.h */,
+				B7B80548129395F800EBE69D /* HSImageSidebarView.m */,
+				B7B8054A12939ADD00EBE69D /* HSImageSidebarViewDelegate.h */,
 			);
 			name = HSSidebarView;
 			sourceTree = "<group>";
@@ -295,7 +295,7 @@
 				B7B8051B129393C400EBE69D /* Sidebar-main.m in Sources */,
 				B7B8051E129393C400EBE69D /* SidebarAppDelegate.m in Sources */,
 				B7B80524129393C400EBE69D /* SidebarViewController.m in Sources */,
-				B7B80549129395F800EBE69D /* HSSidebarView.m in Sources */,
+				B7B80549129395F800EBE69D /* HSImageSidebarView.m in Sources */,
 				B77397AE12A4E85C00CE0A4C /* DeleteImagePopoverController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

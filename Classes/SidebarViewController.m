@@ -98,11 +98,11 @@
 }
 
 
--(NSUInteger)countOfImagesInSidebar:(HSSidebarView *)sidebar {
+-(NSUInteger)countOfImagesInSidebar:(HSImageSidebarView *)sidebar {
 	return [colors count];
 }
 
--(UIImage *)sidebar:(HSSidebarView *)sidebar imageForIndex:(NSUInteger)anIndex {
+-(UIImage *)sidebar:(HSImageSidebarView *)sidebar imageForIndex:(NSUInteger)anIndex {
 	int color = [[colors objectAtIndex:anIndex] intValue];
 	switch (color % 3) {
 		case 0:
@@ -117,7 +117,7 @@
 	}
 }
 
--(void)sidebar:(HSSidebarView *)sidebar didTapImageAtIndex:(NSUInteger)anIndex {
+-(void)sidebar:(HSImageSidebarView *)sidebar didTapImageAtIndex:(NSUInteger)anIndex {
 	NSLog(@"Touched image at index: %u", anIndex);
 	if (sidebar.selectedIndex == anIndex) {
 		DeleteImagePopoverController *content = [[DeleteImagePopoverController alloc] initWithNibName:@"DeleteImagePopoverController" bundle:nil];
@@ -136,7 +136,7 @@
 	}
 }
 
-- (void)sidebar:(HSSidebarView *)sidebar didMoveImageAtIndex:(NSUInteger)oldIndex toIndex:(NSUInteger)newIndex {
+- (void)sidebar:(HSImageSidebarView *)sidebar didMoveImageAtIndex:(NSUInteger)oldIndex toIndex:(NSUInteger)newIndex {
 	NSLog(@"Image at index %d moved to index %d", oldIndex, newIndex);
 	
 	NSNumber *color = [[colors objectAtIndex:oldIndex] retain];
@@ -145,7 +145,7 @@
 	[color release];
 }
 
-- (void)sidebar:(HSSidebarView *)sidebar didRemoveImageAtIndex:(NSUInteger)anIndex {
+- (void)sidebar:(HSImageSidebarView *)sidebar didRemoveImageAtIndex:(NSUInteger)anIndex {
 	NSLog(@"Image at index %d removed", anIndex);
 	[colors removeObjectAtIndex:anIndex];
 }

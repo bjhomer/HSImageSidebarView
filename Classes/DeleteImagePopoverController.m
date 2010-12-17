@@ -7,7 +7,7 @@
 //
 
 #import "DeleteImagePopoverController.h"
-#import "HSSidebarView.h"
+#import "HSImageSidebarView.h"
 
 @implementation DeleteImagePopoverController
 @synthesize sidebar;

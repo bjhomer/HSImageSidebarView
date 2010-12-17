@@ -1,16 +1,16 @@
 //
-//  HSSidebarView.m
+//  HSImageSidebarView.m
 //  Sidebar
 //
 //  Created by BJ Homer on 11/16/10.
 //  Copyright 2010 BJ Homer. All rights reserved.
 //
 
-#import "HSSidebarView.h"
+#import "HSImageSidebarView.h"
 #import <QuartzCore/QuartzCore.h>
 
 
-@interface HSSidebarView ()
+@interface HSImageSidebarView ()
 
 @property (retain) UIScrollView *scrollView;
 @property (retain) CAGradientLayer *selectionGradient;
@@ -41,7 +41,7 @@
 
 @end
 
-@implementation HSSidebarView
+@implementation HSImageSidebarView
 
 @synthesize scrollView=_scrollView;
 @synthesize imageViews;
