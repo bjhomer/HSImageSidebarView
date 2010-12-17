@@ -443,8 +443,8 @@
 			[imageViews insertObject:viewBeingDragged atIndex:newIndex];
 			[self setNeedsLayout];
 			
-		
-			if (CGRectGetMaxY(_scrollView.bounds) - hitPoint.y < 50) {
+			if ((isHorizontal && CGRectGetMaxX(_scrollView.bounds) - hitPoint.x < 50) ||
+				(!isHorizontal && CGRectGetMaxY(_scrollView.bounds) - hitPoint.y < 50)) {
 				if (dragScrollTimer == nil) {
 					self.dragScrollTimer = [NSTimer scheduledTimerWithTimeInterval:0.1
 																			target:self
@@ -453,7 +453,8 @@
 																		   repeats:YES];
 				}
 			}
-			else if (hitPoint.y - CGRectGetMinY(_scrollView.bounds) < 50) {
+			else if ((isHorizontal && hitPoint.x - CGRectGetMinX(_scrollView.bounds) < 50) ||
+					 (!isHorizontal && hitPoint.y - CGRectGetMinY(_scrollView.bounds) < 50)) {
 				if (dragScrollTimer == nil) {
 					self.dragScrollTimer = [NSTimer scheduledTimerWithTimeInterval:0.1
 																			target:self
@@ -499,7 +500,7 @@
 								  delay:0
 								options:UIViewAnimationCurveEaseOut
 							 animations:^{
-								 viewBeingDragged.transform = CGAffineTransformMakeScale(4.0, 4.0);
+								 viewBeingDragged.transform = CGAffineTransformMakeScale(0.8, 0.8);
 								 viewBeingDragged.alpha = 0.0;
 							 }
 							 completion:^(BOOL finished) {
@@ -529,6 +530,11 @@
 		CGFloat contentBottom = _scrollView.contentSize.height;
 		CGFloat scrollBottom = CGRectGetMaxY(_scrollView.bounds);
 		
+		if (isHorizontal) {
+			contentBottom = _scrollView.contentSize.width;
+			scrollBottom = CGRectGetMaxX(_scrollView.bounds);
+		}
+		
 		CGFloat availableContentSpace = contentBottom - scrollBottom;
 		if (availableContentSpace <= 0) {
 			scrollDelta = 0;
@@ -540,6 +546,10 @@
 	else {
 		// Scrolling up; make sure we don't go beyond the top.
 		CGFloat contentTop = _scrollView.contentOffset.y;
+		if (isHorizontal) {
+			contentTop = _scrollView.contentOffset.x;
+		}
+		
 		if (contentTop < (-1 * scrollDelta)) {
 			scrollDelta = -1 * contentTop;
 		}
@@ -550,6 +560,11 @@
 		CGPoint currentContentOffset = _scrollView.contentOffset;
 		CGPoint newOffset = CGPointMake(0, currentContentOffset.y + scrollDelta);
 		CGPoint newViewCenter = CGPointMake(viewBeingDragged.center.x, viewBeingDragged.center.y + scrollDelta);
+		
+		if (isHorizontal) {
+			newOffset = CGPointMake(currentContentOffset.x + scrollDelta, 0);
+			newViewCenter = CGPointMake(viewBeingDragged.center.x + scrollDelta, viewBeingDragged.center.y);
+		}
 		
 		[UIView animateWithDuration:duration
 							  delay:0
