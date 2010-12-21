@@ -41,6 +41,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	_sidebar.delegate = self;
+	_sidebar.rowHeight = 240;
 	
 	colors = [[NSMutableArray alloc] init];
 	

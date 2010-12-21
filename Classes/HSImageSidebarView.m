@@ -121,12 +121,6 @@
 	UIColor *topColor = [baseColor colorWithAlphaComponent:1];
 	UIColor *bottomColor = [baseColor colorWithAlphaComponent:0.75];
 	selectionGradient.colors = [NSArray arrayWithObjects:(id)[topColor CGColor], (id)[bottomColor CGColor], nil];
-	if (isHorizontal) {
-		selectionGradient.bounds = CGRectMake(0, 0, rowHeight, _scrollView.bounds.size.height);
-	}
-	else {
-		selectionGradient.bounds = CGRectMake(0, 0, _scrollView.bounds.size.width, rowHeight);
-	}
 	selectionGradient.hidden = YES;
 	
 	[_scrollView.layer addSublayer:selectionGradient];
@@ -230,6 +224,12 @@
 						 forKey:kCATransactionDisableActions];
 		
 		selectionGradient.hidden = NO;
+		if (isHorizontal) {
+			selectionGradient.bounds = CGRectMake(0, 0, rowHeight, _scrollView.bounds.size.height);
+		}
+		else {
+			selectionGradient.bounds = CGRectMake(0, 0, _scrollView.bounds.size.width, rowHeight);
+		}
 		selectionGradient.position = [self imageViewCenterInScrollViewForIndex:selectedIndex];
 		[CATransaction commit];
 		
