@@ -650,12 +650,12 @@
 		return CGRectMake(imageOriginX, rowHeight*anIndex + imageOriginY, imageViewWidth, imageViewHeight);
 	}
 	else {
-		CGFloat rowTallness = _scrollView.bounds.size.height;
-		CGFloat imageViewHeight = rowTallness * 3.0 / 4.0;
+		CGFloat scrollerHeight = _scrollView.bounds.size.height;
+		CGFloat imageViewHeight = scrollerHeight * 3.0 / 4.0;
 		CGFloat imageViewWidth = rowHeight * 3.0 / 4.0;
 
-		CGFloat imageOriginX = (rowTallness - imageViewWidth) / 2.0;
-		CGFloat imageOriginY = (rowHeight - imageViewHeight) / 2.0;
+		CGFloat imageOriginX = (rowHeight - imageViewWidth) / 2.0;
+		CGFloat imageOriginY = (scrollerHeight - imageViewHeight) / 2.0;
 		
 		return CGRectMake(rowHeight*anIndex + imageOriginX, imageOriginY, imageViewWidth, imageViewHeight);
 	}
