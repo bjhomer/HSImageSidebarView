@@ -89,6 +89,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B73BA5A212E268820025030E /* Sample */ = {
+			isa = PBXGroup;
+			children = (
+				B7B8051C129393C400EBE69D /* SidebarAppDelegate.h */,
+				B7B8051D129393C400EBE69D /* SidebarAppDelegate.m */,
+				B7B80522129393C400EBE69D /* SidebarViewController.h */,
+				B7B80523129393C400EBE69D /* SidebarViewController.m */,
+				B77397AB12A4E85C00CE0A4C /* DeleteImagePopoverController.h */,
+				B77397AC12A4E85C00CE0A4C /* DeleteImagePopoverController.m */,
+			);
+			name = Sample;
+			path = ../Sample;
+			sourceTree = "<group>";
+		};
 		B7B804FD129393C300EBE69D = {
 			isa = PBXGroup;
 			children = (
@@ -104,13 +118,8 @@
 		B7B80504129393C300EBE69D /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				B73BA5A212E268820025030E /* Sample */,
 				B7B80546129394EA00EBE69D /* HSImageSidebarView */,
-				B7B8051C129393C400EBE69D /* SidebarAppDelegate.h */,
-				B7B8051D129393C400EBE69D /* SidebarAppDelegate.m */,
-				B7B80522129393C400EBE69D /* SidebarViewController.h */,
-				B7B80523129393C400EBE69D /* SidebarViewController.m */,
-				B77397AB12A4E85C00CE0A4C /* DeleteImagePopoverController.h */,
-				B77397AC12A4E85C00CE0A4C /* DeleteImagePopoverController.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -396,6 +405,7 @@
 				INFOPLIST_FILE = "Sidebar-Info.plist";
 				LINKER_DISPLAYS_MANGLED_NAMES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -410,6 +420,7 @@
 				INFOPLIST_FILE = "Sidebar-Info.plist";
 				LINKER_DISPLAYS_MANGLED_NAMES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
