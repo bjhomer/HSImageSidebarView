@@ -21,12 +21,6 @@
 		B7B80521129393C400EBE69D /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7B8051F129393C400EBE69D /* MainWindow.xib */; };
 		B7B80524129393C400EBE69D /* SidebarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B80523129393C400EBE69D /* SidebarViewController.m */; };
 		B7B80527129393C400EBE69D /* SidebarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7B80525129393C400EBE69D /* SidebarViewController.xib */; };
-		B7B8052F129393C400EBE69D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B8050F129393C300EBE69D /* UIKit.framework */; };
-		B7B80530129393C400EBE69D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B80511129393C300EBE69D /* Foundation.framework */; };
-		B7B80531129393C400EBE69D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B80513129393C300EBE69D /* CoreGraphics.framework */; };
-		B7B80535129393C400EBE69D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B7B80534129393C400EBE69D /* InfoPlist.strings */; };
-		B7B80537129393C400EBE69D /* SidebarTests.h in Resources */ = {isa = PBXBuildFile; fileRef = B7B80536129393C400EBE69D /* SidebarTests.h */; };
-		B7B80539129393C400EBE69D /* SidebarTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B80538129393C400EBE69D /* SidebarTests.m */; };
 		B7B80549129395F800EBE69D /* HSImageSidebarView.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B80548129395F800EBE69D /* HSImageSidebarView.m */; };
 		B7D4B0B31294F30E00BC0A01 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D4B0B21294F30E00BC0A01 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
@@ -52,12 +46,6 @@
 		B7B80522129393C400EBE69D /* SidebarViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SidebarViewController.h; sourceTree = "<group>"; };
 		B7B80523129393C400EBE69D /* SidebarViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SidebarViewController.m; sourceTree = "<group>"; };
 		B7B80526129393C400EBE69D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SidebarViewController.xib; sourceTree = "<group>"; };
-		B7B8052E129393C400EBE69D /* SidebarTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SidebarTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		B7B80532129393C400EBE69D /* SidebarTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SidebarTests-Info.plist"; sourceTree = "<group>"; };
-		B7B80533129393C400EBE69D /* SidebarTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SidebarTests-Prefix.pch"; sourceTree = "<group>"; };
-		B7B80534129393C400EBE69D /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = en.lproj/SidebarTests/InfoPlist.strings; sourceTree = "<group>"; };
-		B7B80536129393C400EBE69D /* SidebarTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SidebarTests.h; sourceTree = "<group>"; };
-		B7B80538129393C400EBE69D /* SidebarTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SidebarTests.m; sourceTree = "<group>"; };
 		B7B80547129395F800EBE69D /* HSImageSidebarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSImageSidebarView.h; sourceTree = "<group>"; };
 		B7B80548129395F800EBE69D /* HSImageSidebarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSImageSidebarView.m; sourceTree = "<group>"; };
 		B7B8054A12939ADD00EBE69D /* HSImageSidebarViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSImageSidebarViewDelegate.h; sourceTree = "<group>"; };
@@ -73,16 +61,6 @@
 				B7B80510129393C300EBE69D /* UIKit.framework in Frameworks */,
 				B7B80512129393C300EBE69D /* Foundation.framework in Frameworks */,
 				B7B80514129393C300EBE69D /* CoreGraphics.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B7B8052A129393C400EBE69D /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B7B8052F129393C400EBE69D /* UIKit.framework in Frameworks */,
-				B7B80530129393C400EBE69D /* Foundation.framework in Frameworks */,
-				B7B80531129393C400EBE69D /* CoreGraphics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -111,7 +89,6 @@
 				B7B80506129393C300EBE69D /* Resources */,
 				B7B80507129393C300EBE69D /* Frameworks */,
 				B7B8050D129393C300EBE69D /* Products */,
-				B7B80528129393C400EBE69D /* Tests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -129,7 +106,6 @@
 			children = (
 				B7B80516129393C300EBE69D /* Sidebar-Prefix.pch */,
 				B7B8051A129393C400EBE69D /* Sidebar-main.m */,
-				B7B80533129393C400EBE69D /* SidebarTests-Prefix.pch */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -145,10 +121,8 @@
 				B7B80517129393C300EBE69D /* InfoPlist.strings */,
 				B7B8051F129393C400EBE69D /* MainWindow.xib */,
 				B7B80525129393C400EBE69D /* SidebarViewController.xib */,
-				B7B80532129393C400EBE69D /* SidebarTests-Info.plist */,
-				B7B80534129393C400EBE69D /* InfoPlist.strings */,
 			);
-			name = Resources;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		B7B80507129393C300EBE69D /* Frameworks */ = {
@@ -166,18 +140,8 @@
 			isa = PBXGroup;
 			children = (
 				B7B8050C129393C300EBE69D /* Sidebar.app */,
-				B7B8052E129393C400EBE69D /* SidebarTests.octest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		B7B80528129393C400EBE69D /* Tests */ = {
-			isa = PBXGroup;
-			children = (
-				B7B80536129393C400EBE69D /* SidebarTests.h */,
-				B7B80538129393C400EBE69D /* SidebarTests.m */,
-			);
-			path = Tests;
 			sourceTree = "<group>";
 		};
 		B7B80546129394EA00EBE69D /* HSImageSidebarView */ = {
@@ -210,24 +174,6 @@
 			productReference = B7B8050C129393C300EBE69D /* Sidebar.app */;
 			productType = "com.apple.product-type.application";
 		};
-		B7B8052D129393C400EBE69D /* SidebarTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B7B80541129393C400EBE69D /* Build configuration list for PBXNativeTarget "SidebarTests" */;
-			buildPhases = (
-				B7B80529129393C400EBE69D /* Sources */,
-				B7B8052A129393C400EBE69D /* Frameworks */,
-				B7B8052B129393C400EBE69D /* Resources */,
-				B7B8052C129393C400EBE69D /* ShellScript */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = SidebarTests;
-			productName = SidebarTests;
-			productReference = B7B8052E129393C400EBE69D /* SidebarTests.octest */;
-			productType = "com.apple.product-type.bundle";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -249,7 +195,6 @@
 			projectRoot = "";
 			targets = (
 				B7B8050B129393C300EBE69D /* Sidebar */,
-				B7B8052D129393C400EBE69D /* SidebarTests */,
 			);
 		};
 /* End PBXProject section */
@@ -269,32 +214,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B7B8052B129393C400EBE69D /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B7B80535129393C400EBE69D /* InfoPlist.strings in Resources */,
-				B7B80537129393C400EBE69D /* SidebarTests.h in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		B7B8052C129393C400EBE69D /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B7B80508129393C300EBE69D /* Sources */ = {
@@ -306,14 +226,6 @@
 				B7B80524129393C400EBE69D /* SidebarViewController.m in Sources */,
 				B7B80549129395F800EBE69D /* HSImageSidebarView.m in Sources */,
 				B77397AE12A4E85C00CE0A4C /* DeleteImagePopoverController.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B7B80529129393C400EBE69D /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B7B80539129393C400EBE69D /* SidebarTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -426,69 +338,6 @@
 			};
 			name = Release;
 		};
-		B7B80542129393C400EBE69D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "SidebarTests-Prefix.pch";
-				INFOPLIST_FILE = "SidebarTests-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
-				OTHER_LDFLAGS = (
-					"-framework",
-					SenTestingKit,
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = octest;
-			};
-			name = Debug;
-		};
-		B7B80543129393C400EBE69D /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "SidebarTests-Prefix.pch";
-				INFOPLIST_FILE = "SidebarTests-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
-				OTHER_LDFLAGS = (
-					"-framework",
-					SenTestingKit,
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = octest;
-			};
-			name = Release;
-		};
-		B7B80544129393C400EBE69D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				PRODUCT_NAME = SidebarTests;
-			};
-			name = Debug;
-		};
-		B7B80545129393C400EBE69D /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				PRODUCT_NAME = SidebarTests;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -508,17 +357,6 @@
 			buildConfigurations = (
 				B7B8053F129393C400EBE69D /* Debug */,
 				B7B80540129393C400EBE69D /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		B7B80541129393C400EBE69D /* Build configuration list for PBXNativeTarget "SidebarTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B7B80542129393C400EBE69D /* Debug */,
-				B7B80543129393C400EBE69D /* Release */,
-				B7B80544129393C400EBE69D /* Debug */,
-				B7B80545129393C400EBE69D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
