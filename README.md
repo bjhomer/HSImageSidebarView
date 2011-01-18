@@ -1,17 +1,17 @@
 HSImageSidebarView
 ==================
 
-HSImageSidebarView is a subclass of UIview for displaying a collection of images.
+`HSImageSidebarView` is a subclass of `UIView` for displaying a collection of images.
 It was designed specifically with the iPad in mind, but should work on the iPhone
 as well. The images are arranged either horizontally or vertically, depending on the
 dimensions of the view. It supports selection, scrolling, drag-and-drop
-rearranging, and drag-and-drop deletion. The API is patterned after UITableView,
+rearranging, and drag-and-drop deletion. The API is patterned after `UITableView`,
 so it will be familiar to Cocoa Touch programmers.
 
 ![Sample screenshot](https://github.com/bjhomer/HSImageSidebarView/raw/master/Sample/sampleImage.png)
 
-An HSImageSidebarView is created using the standard initWithFrame: method
-on UIView.
+An `HSImageSidebarView` is created using the standard `initWithFrame:` method
+on `UIView`.
 
     // Create an 80-pixel sidebar on the left side of the screen
     HSImageSidebarView *sidebar = [[HSImageSidebarView alloc] initWithFrame:CGRectMake(0, 0, 80, 1024)];
@@ -21,8 +21,8 @@ on UIView.
     
     [sidebar release];
 
-It can also be created in Interface Builder by adding a UIView and then setting
-its class (in IB) to HSImageSidebarView.
+It can also be created in Interface Builder by adding a `UIView` and then setting
+its class (in IB) to `HSImageSidebarView`.
 
 The image sidebar receives all its information through delegate methods. The
 two required methods are these:
@@ -37,7 +37,7 @@ one of these methods:
     - (void)sidebar:(HSImageSidebarView *)sidebar didMoveImageAtIndex:(NSUInteger)oldIndex toIndex:(NSUInteger)newIndex;
     - (void)sidebar:(HSImageSidebarView *)sidebar didRemoveImageAtIndex:(NSUInteger)anIndex;
     
-HSImageSidebarView requires iOS 4.0 or later. A sample project is included to
+`HSImageSidebarView` requires iOS 4.0 or later. A sample project is included to
 demonstrate usage.
 
 To Do
