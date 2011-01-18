@@ -314,7 +314,7 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Sidebar-Prefix.pch";
-				INFOPLIST_FILE = "Sidebar-Info.plist";
+				INFOPLIST_FILE = "Resources/Sidebar-Info.plist";
 				LINKER_DISPLAYS_MANGLED_NAMES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 2;
@@ -329,7 +329,7 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Sidebar-Prefix.pch";
-				INFOPLIST_FILE = "Sidebar-Info.plist";
+				INFOPLIST_FILE = "Resources/Sidebar-Info.plist";
 				LINKER_DISPLAYS_MANGLED_NAMES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 2;
