@@ -14,7 +14,7 @@ An `HSImageSidebarView` is created using the standard `initWithFrame:` method
 on `UIView`.
 
     // Create an 80-pixel sidebar on the left side of the screen
-    HSImageSidebarView *sidebar = [[HSImageSidebarView alloc] initWithFrame:CGRectMake(0, 0, 80, 1024)];
+    HSImageSidebarView *sidebar = [[HSImageSidebarView alloc] initWithFrame:CGRectMake(0, 0, 80, 1004)];
     sidebar.delegate = self;
     
     [parentView addSubview:sidebar];
