@@ -51,3 +51,6 @@ been completed yet:
 - Be smarter about calculating the image frame when the the aspect fit 
   doesn't fill the whole frame. (This mostly applies when trying to position
   a popover correctly.)
+- Add support for indentation levels
+- Add support for numbering images
+- Add support for multiple selection
