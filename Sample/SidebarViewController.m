@@ -129,7 +129,7 @@
 		controller.popoverContentSize = content.view.frame.size;
 		controller.delegate = self;
 		CGRect frame = [sidebar frameOfImageAtIndex:anIndex];
-		[controller presentPopoverFromRect:frame inView:sidebar permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+		[controller presentPopoverFromRect:frame inView:sidebar permittedArrowDirections:UIPopoverArrowDirectionLeft animated:YES];
 
 		self.popover = controller;
 		[content release];

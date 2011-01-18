@@ -8,6 +8,8 @@ dimensions of the view. It supports selection, scrolling, drag-and-drop
 rearranging, and drag-and-drop deletion. The API is patterned after UITableView,
 so it will be familiar to Cocoa Touch programmers.
 
+![Sample screenshot](https://github.com/bjhomer/HSImageSidebarView/raw/master/Sample/sampleImage.png)
+
 An HSImageSidebarView is created using the standard initWithFrame: method
 on UIView.
 
