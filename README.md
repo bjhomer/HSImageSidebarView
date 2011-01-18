@@ -35,7 +35,7 @@ one of these methods:
     - (void)sidebar:(HSImageSidebarView *)sidebar didMoveImageAtIndex:(NSUInteger)oldIndex toIndex:(NSUInteger)newIndex;
     - (void)sidebar:(HSImageSidebarView *)sidebar didRemoveImageAtIndex:(NSUInteger)anIndex;
     
-*HSImageSidebarView requires iOS 4.0 or later*. A sample project is included to
+HSImageSidebarView requires iOS 4.0 or later. A sample project is included to
 demonstrate usage.
 
 To Do
