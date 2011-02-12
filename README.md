@@ -2,11 +2,11 @@ HSImageSidebarView
 ==================
 
 `HSImageSidebarView` is a subclass of `UIView` for displaying a collection of images.
-It was designed specifically with the iPad in mind, but should work on the iPhone
-as well. The images are arranged either horizontally or vertically, depending on the
+The images are arranged either horizontally or vertically, depending on the
 dimensions of the view. It supports selection, scrolling, drag-and-drop
 rearranging, and drag-and-drop deletion. The API is patterned after `UITableView`,
-so it will be familiar to Cocoa Touch programmers.
+so it will be familiar to Cocoa Touch programmers. HSImageSidebarView works with
+both iPad and iPhone interface idioms.
 
 ![Sample screenshot](https://github.com/bjhomer/HSImageSidebarView/raw/master/Sample/sampleImage.png)
 
@@ -46,7 +46,6 @@ To Do
 The following are features which I would like to see added, but which haven't
 been completed yet:
 
-- Make sure it works on iPhone.
 - Expose selection color property
 - Enable/disable drag-to-move
 - Enable/disable drag-to-delete

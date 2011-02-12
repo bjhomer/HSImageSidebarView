@@ -7,16 +7,17 @@
 //
 
 #import "SidebarViewController.h"
-#import "DeleteImagePopoverController.h"
 
 @interface SidebarViewController ()
 @property (retain) UIPopoverController *popover;
+@property (copy) void (^actionSheetBlock)(NSUInteger);
 
 @end
 
 @implementation SidebarViewController
 @synthesize sidebar = _sidebar;
 @synthesize popover;
+@synthesize actionSheetBlock;
 
 
 
@@ -120,19 +121,23 @@
 -(void)sidebar:(HSImageSidebarView *)sidebar didTapImageAtIndex:(NSUInteger)anIndex {
 	NSLog(@"Touched image at index: %u", anIndex);
 	if (sidebar.selectedIndex == anIndex) {
-		DeleteImagePopoverController *content = [[DeleteImagePopoverController alloc] initWithNibName:@"DeleteImagePopoverController" bundle:nil];
-		content.attachedIndex = anIndex;
-		content.sidebar = sidebar;
-		
-		UIPopoverController *controller = [[UIPopoverController alloc] initWithContentViewController:content];
-		content.popoverController = controller;
-		controller.popoverContentSize = content.view.frame.size;
-		controller.delegate = self;
-		CGRect frame = [sidebar frameOfImageAtIndex:anIndex];
-		[controller presentPopoverFromRect:frame inView:sidebar permittedArrowDirections:UIPopoverArrowDirectionLeft animated:YES];
+		UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Delete image?"
+														   delegate:self
+												  cancelButtonTitle:@"Cancel"
+											 destructiveButtonTitle:@"Delete" otherButtonTitles:nil];
 
-		self.popover = controller;
-		[content release];
+		self.actionSheetBlock = ^(NSUInteger selectedIndex) {
+			if (selectedIndex == sheet.destructiveButtonIndex) {
+				[sidebar deleteRowAtIndex:anIndex];
+				self.actionSheetBlock = nil;
+			}
+		};
+		
+		[sheet showFromRect:[sidebar frameOfImageAtIndex:anIndex]
+					 inView:sidebar
+				   animated:YES];
+		[sheet release];
+			
 	}
 }
 
@@ -148,6 +153,10 @@
 - (void)sidebar:(HSImageSidebarView *)sidebar didRemoveImageAtIndex:(NSUInteger)anIndex {
 	NSLog(@"Image at index %d removed", anIndex);
 	[colors removeObjectAtIndex:anIndex];
+}
+
+-(void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
+	actionSheetBlock(buttonIndex);
 }
 
 - (void)dealloc {
