@@ -379,7 +379,7 @@
 		CGPoint hitPoint = [recognizer locationInView:_scrollView];
 		NSInteger newSelection = ((isHorizontal ? hitPoint.x : hitPoint.y) / rowHeight);
 		
-		if (newSelection > self.imageCount - 1) {
+		if (newSelection > self.imageCount - 1 || self.imageCount == 0) {
 			self.selectedIndex = -1;
 		}
 		else {
