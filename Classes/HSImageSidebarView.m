@@ -252,11 +252,21 @@
 
 - (void) reloadData {
 	NSUInteger imageCount = [delegate countOfImagesInSidebar:self];
-	
+
+	// clear out the previous imageViews so we get a fresh array to fill
+    [imageViews removeAllObjects];
 	for (NSUInteger i=0; i<imageCount; ++i) {
 		[imageViews addObject:[NSNull null]];
 	}
 	
+    // remove all previous images that were loaded
+    NSArray *subViews = [_scrollView subviews];
+    for (UIView *view in subViews) {
+        if ([view isKindOfClass:[UIImageView class]]) {
+            [view removeFromSuperview];
+        }
+    }
+    
 	[self recalculateScrollViewContentSize];
 	[self setNeedsLayout];
 }
