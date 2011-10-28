@@ -10,7 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 
-@interface HSImageSidebarView ()
+@interface HSImageSidebarView () <UIScrollViewDelegate>
 
 @property (retain) UIScrollView *scrollView;
 @property (retain) CAGradientLayer *selectionGradient;
@@ -96,6 +96,7 @@
 - (void) setupViewHierarchy {
 	
 	self.scrollView = [[[UIScrollView alloc] initWithFrame:self.bounds] autorelease];
+	_scrollView.delegate = self;
 	if (self.bounds.size.width > self.bounds.size.height) {
 		isHorizontal = YES;
 		[_scrollView setAutoresizingMask: UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth];
@@ -710,6 +711,12 @@
 	}
 	
 	return [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(firstRow, lastRow - firstRow + 1)];
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+	[self setNeedsLayout];
 }
 
 @end
