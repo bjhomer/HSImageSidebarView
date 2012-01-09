@@ -59,6 +59,9 @@
 @synthesize rowHeight;
 @synthesize isHorizontal;
 
+@synthesize dragToMove;
+@synthesize dragToDelete;
+
 #pragma mark -
 - (id)initWithFrame:(CGRect)frame {
 	if ((self = [super initWithFrame:frame])) {
@@ -104,7 +107,7 @@
 	else {
 		[_scrollView setAutoresizingMask: UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleHeight];
 	}
-
+    
 	
 	_scrollView.backgroundColor = [UIColor scrollViewTexturedBackgroundColor];
 	if (isHorizontal == NO) {
@@ -161,7 +164,7 @@
 		if (obj != noView && obj != viewBeingDragged && [visibleIndices containsIndex:idx] == NO) {
 			[indexesToRelease addIndex:idx];
 			[self enqueueReusableImageView:obj];
-
+            
 		}
 	}];
 	
@@ -215,7 +218,7 @@
 							 }
 						 }];
 					 }
-					completion:NULL];
+                     completion:NULL];
 	
 	// Draw selection layer
 	if (selectedIndex >= 0) {
@@ -253,7 +256,7 @@
 
 - (void) reloadData {
 	NSUInteger imageCount = [delegate countOfImagesInSidebar:self];
-
+    
 	// clear out the previous imageViews so we get a fresh array to fill
     [imageViews removeAllObjects];
 	for (NSUInteger i=0; i<imageCount; ++i) {
@@ -370,7 +373,7 @@
 		[self enqueueReusableImageView:selectedView];
 	}
 	[imageViews removeObjectAtIndex:anIndex];
-
+    
 	if (selectedIndex != -1 && anIndex < selectedIndex) {
 		self.selectedIndex -= 1;
 		self.shouldAnimateSelectionLayer = YES;
@@ -394,7 +397,7 @@
 			self.selectedIndex = -1;
 		}
 		else {
-		
+            
 			// Send the delegate method before changing selection state,
 			// so that the user can determine whether the tap was on an
 			// already-selected item by querying the selection state.
@@ -424,6 +427,14 @@
 	if (isInScrollView == NO) {
 		newIndex = self.draggedViewOldIndex;
 	}
+    
+    //if both dragToMove and dragToDelete are disabled, select the index pressed and return;
+    if(dragToMove == NO && dragToDelete == NO)
+    {
+        self.selectedIndex = newIndex;
+        return;
+    }
+    
 	
 	if (recognizer.state == UIGestureRecognizerStateBegan) {
 		UIImageView *hitView = [self.imageViews objectAtIndex:newIndex];
@@ -434,10 +445,12 @@
 							 hitView.transform = CGAffineTransformMakeScale(1.1, 1.1);
 						 }
 		 ];
-		self.viewBeingDragged = hitView;
-		self.draggedViewOldIndex = newIndex;
-		self.dragOffset = CGPointMake(hitPoint.x - hitView.center.x, hitPoint.y - hitView.center.y);
-		[_scrollView bringSubviewToFront:viewBeingDragged];
+        
+        self.viewBeingDragged = hitView;
+        self.draggedViewOldIndex = newIndex;
+        self.dragOffset = CGPointMake(hitPoint.x - hitView.center.x, hitPoint.y - hitView.center.y);
+        [_scrollView bringSubviewToFront:viewBeingDragged];
+        
 	}
 	else if (recognizer.state == UIGestureRecognizerStateChanged) {
 		viewBeingDragged.center = CGPointMake(hitPoint.x - self.dragOffset.x, hitPoint.y - self.dragOffset.y);
@@ -446,13 +459,18 @@
 			[dragScrollTimer invalidate];
 			self.dragScrollTimer = nil;
 			
-			[imageViews removeObject:viewBeingDragged];
-			[self setNeedsLayout];
+            if(dragToDelete == YES) {
+                [imageViews removeObject:viewBeingDragged];
+                [self setNeedsLayout];
+            }
+            
 		}
 		else {
-			[imageViews removeObject:viewBeingDragged];
-			[imageViews insertObject:viewBeingDragged atIndex:newIndex];
-			[self setNeedsLayout];
+            if(dragToMove == YES) {
+                [imageViews removeObject:viewBeingDragged];
+                [imageViews insertObject:viewBeingDragged atIndex:newIndex];
+                [self setNeedsLayout];
+            }
 			
 			if ((isHorizontal && CGRectGetMaxX(_scrollView.bounds) - hitPoint.x < 50) ||
 				(!isHorizontal && CGRectGetMaxY(_scrollView.bounds) - hitPoint.y < 50)) {
@@ -488,44 +506,66 @@
 		CGRect safeZone = CGRectInset(_scrollView.bounds, -30, -30);
 		
 		if (isInScrollView || CGRectContainsPoint(safeZone, hitPoint)) {
-			CGPoint finalPosition = [self imageViewCenterInScrollViewForIndex:newIndex];
-			[UIView animateWithDuration:0.2
-							 animations:^{
-								 viewBeingDragged.center = finalPosition;
-								 viewBeingDragged.alpha = 1.0;
-								 viewBeingDragged.transform = CGAffineTransformIdentity;
-							 }
-							 completion:^(BOOL finished){
-								 self.selectedIndex = newIndex;
-								 [self setNeedsLayout];
-							 }];
-			[imageViews removeObject:viewBeingDragged];
-			[imageViews insertObject:viewBeingDragged atIndex:newIndex];
-			
-			if (draggedViewOldIndex != newIndex && [delegate respondsToSelector:@selector(sidebar:didMoveImageAtIndex:toIndex:)]) {
-				[delegate sidebar:self didMoveImageAtIndex:draggedViewOldIndex toIndex:newIndex];
-			}
+            
+            if(dragToMove == YES) {
+                CGPoint finalPosition = [self imageViewCenterInScrollViewForIndex:newIndex];
+                [UIView animateWithDuration:0.2
+                                 animations:^{
+                                     viewBeingDragged.center = finalPosition;
+                                     viewBeingDragged.alpha = 1.0;
+                                     viewBeingDragged.transform = CGAffineTransformIdentity;
+                                 }
+                                 completion:^(BOOL finished){
+                                     self.selectedIndex = newIndex;
+                                     [self setNeedsLayout];
+                                 }];
+                
+                [imageViews removeObject:viewBeingDragged];
+                [imageViews insertObject:viewBeingDragged atIndex:newIndex];
+                
+                if (draggedViewOldIndex != newIndex && [delegate respondsToSelector:@selector(sidebar:didMoveImageAtIndex:toIndex:)]) {
+                    [delegate sidebar:self didMoveImageAtIndex:draggedViewOldIndex toIndex:newIndex];
+                }
+            }
 		}
 		else {
-			[UIView animateWithDuration:0.2
-								  delay:0
-								options:UIViewAnimationCurveEaseOut
-							 animations:^{
-								 viewBeingDragged.transform = CGAffineTransformMakeScale(0.8, 0.8);
-								 viewBeingDragged.alpha = 0.0;
-							 }
-							 completion:^(BOOL finished) {
-								 self.selectedIndex = -1;
-								 [UIView animateWithDuration:0.2 animations:^{
-									 [self recalculateScrollViewContentSize];
-								 }];
-								 [self setNeedsLayout];
-							 }];
-			[imageViews removeObject:viewBeingDragged];
-			
-			if ([delegate respondsToSelector:@selector(sidebar:didRemoveImageAtIndex:)]) {
-				[delegate sidebar:self didRemoveImageAtIndex:self.draggedViewOldIndex];
-			}
+            if(dragToDelete == YES) {
+                [UIView animateWithDuration:0.2
+                                      delay:0
+                                    options:UIViewAnimationCurveEaseOut
+                                 animations:^{
+                                     viewBeingDragged.transform = CGAffineTransformMakeScale(0.8, 0.8);
+                                     viewBeingDragged.alpha = 0.0;
+                                 }
+                                 completion:^(BOOL finished) {
+                                     self.selectedIndex = -1;
+                                     [UIView animateWithDuration:0.2 animations:^{
+                                         [self recalculateScrollViewContentSize];
+                                     }];
+                                     [self setNeedsLayout];
+                                 }];
+                
+                [imageViews removeObject:viewBeingDragged];
+                
+                if ([delegate respondsToSelector:@selector(sidebar:didRemoveImageAtIndex:)]) {
+                    [delegate sidebar:self didRemoveImageAtIndex:self.draggedViewOldIndex];
+                }
+            }
+            else if(dragToDelete == NO) {
+                
+                CGPoint finalPosition = [self imageViewCenterInScrollViewForIndex:draggedViewOldIndex];
+                [UIView animateWithDuration:0.2
+                                 animations:^{
+                                     viewBeingDragged.center = finalPosition;
+                                     viewBeingDragged.alpha = 1.0;
+                                     viewBeingDragged.transform = CGAffineTransformIdentity;
+                                 }
+                                 completion:^(BOOL finished){
+                                     self.selectedIndex = newIndex;
+                                     [self setNeedsLayout];
+                                 }];
+            }
+            
 		}
 		
 		self.draggedViewOldIndex = -1;
@@ -592,7 +632,7 @@
 							 [self setNeedsLayout];
 						 }];
 	}
-
+    
 }
 
 - (void)scrollDown:(NSTimer *)timer {
@@ -657,14 +697,14 @@
 		
 		CGFloat imageOriginX = (rowWidth - imageViewWidth) / 2.0;
 		CGFloat imageOriginY = (rowHeight - imageViewHeight) / 2.0;
-			
+        
 		return CGRectMake(imageOriginX, rowHeight*anIndex + imageOriginY, imageViewWidth, imageViewHeight);
 	}
 	else {
 		CGFloat scrollerHeight = _scrollView.bounds.size.height;
 		CGFloat imageViewHeight = scrollerHeight * 3.0 / 4.0;
 		CGFloat imageViewWidth = rowHeight * 3.0 / 4.0;
-
+        
 		CGFloat imageOriginX = (rowHeight - imageViewWidth) / 2.0;
 		CGFloat imageOriginY = (scrollerHeight - imageViewHeight) / 2.0;
 		
