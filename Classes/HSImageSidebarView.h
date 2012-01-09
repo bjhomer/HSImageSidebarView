@@ -20,6 +20,10 @@
 @property (assign) CGFloat rowHeight;
 @property (assign) NSInteger selectedIndex;
 
+@property (assign) BOOL dragToMove;
+@property (assign) BOOL dragToDelete;
+
+
 - (CGRect)frameOfImageAtIndex:(NSUInteger)anIndex;
 
 - (BOOL)imageAtIndexIsVisible:(NSUInteger)anIndex;
