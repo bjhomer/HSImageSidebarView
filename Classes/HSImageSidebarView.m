@@ -452,7 +452,9 @@
 	}
 	else if (recognizer.state == UIGestureRecognizerStateChanged) {
 		viewBeingDragged.center = CGPointMake(hitPoint.x - self.dragOffset.x, hitPoint.y - self.dragOffset.y);
-		if (isInScrollView == NO) {
+        CGRect safeZone = CGRectInset(_scrollView.bounds, -30, -30);
+        BOOL isViewDraggedInScrollView = CGRectIntersectsRect(viewBeingDragged.frame, safeZone);
+		if (isViewDraggedInScrollView == NO) {
 			// Don't scroll if we're not over the scrollview
 			[dragScrollTimer invalidate];
 			self.dragScrollTimer = nil;
