@@ -42,8 +42,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	_sidebar.delegate = self;
-	_sidebar.dragToDelete = YES;
-        _sidebar.dragToMove = YES;
 	
 	colors = [[NSMutableArray alloc] init];
 	
