@@ -75,7 +75,7 @@
 				B7B80523129393C400EBE69D /* SidebarViewController.m */,
 			);
 			name = Sample;
-			path = ../Sample;
+			path = Sidebar;
 			sourceTree = "<group>";
 		};
 		B7B804FD129393C300EBE69D = {
@@ -96,7 +96,7 @@
 				B73BA5A212E268820025030E /* Sample */,
 				B7B80546129394EA00EBE69D /* HSImageSidebarView */,
 			);
-			path = Classes;
+			name = Classes;
 			sourceTree = "<group>";
 		};
 		B7B80505129393C300EBE69D /* Other Sources */ = {
@@ -106,6 +106,7 @@
 				B7B8051A129393C400EBE69D /* Sidebar-main.m */,
 			);
 			name = "Other Sources";
+			path = Sidebar;
 			sourceTree = "<group>";
 		};
 		B7B80506129393C300EBE69D /* Resources */ = {
@@ -120,7 +121,8 @@
 				B7B8051F129393C400EBE69D /* MainWindow.xib */,
 				B7B80525129393C400EBE69D /* SidebarViewController.xib */,
 			);
-			path = Resources;
+			name = Resources;
+			path = Sidebar;
 			sourceTree = "<group>";
 		};
 		B7B80507129393C300EBE69D /* Frameworks */ = {
@@ -149,7 +151,7 @@
 				B7B80548129395F800EBE69D /* HSImageSidebarView.m */,
 				B7B8054A12939ADD00EBE69D /* HSImageSidebarViewDelegate.h */,
 			);
-			name = HSImageSidebarView;
+			path = HSImageSidebarView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -311,8 +313,8 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Sidebar-Prefix.pch";
-				INFOPLIST_FILE = "Resources/Sidebar-Info.plist";
+				GCC_PREFIX_HEADER = "Sidebar/Sidebar-Prefix.pch";
+				INFOPLIST_FILE = "Sidebar/Sidebar-Info.plist";
 				LINKER_DISPLAYS_MANGLED_NAMES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -326,8 +328,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Sidebar-Prefix.pch";
-				INFOPLIST_FILE = "Resources/Sidebar-Info.plist";
+				GCC_PREFIX_HEADER = "Sidebar/Sidebar-Prefix.pch";
+				INFOPLIST_FILE = "Sidebar/Sidebar-Info.plist";
 				LINKER_DISPLAYS_MANGLED_NAMES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -8,7 +8,7 @@ rearranging, and drag-and-drop deletion. The API is patterned after `UITableView
 so it will be familiar to Cocoa Touch programmers. HSImageSidebarView works with
 both iPad and iPhone interface idioms.
 
-![Sample screenshot](https://github.com/bjhomer/HSImageSidebarView/raw/master/Sample/sampleImage.png)
+![Sample screenshot](https://github.com/bjhomer/HSImageSidebarView/raw/master/sampleImage.png)
 
 An `HSImageSidebarView` is created using the standard `initWithFrame:` method
 on `UIView`.

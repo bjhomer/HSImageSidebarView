@@ -34,9 +34,9 @@
 		B79A43701553964900F45E43 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		B79A43721553964900F45E43 /* RootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		B79A43731553964900F45E43 /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
-		B79A437E155396C700F45E43 /* HSImageSidebarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HSImageSidebarView.h; path = Classes/HSImageSidebarView.h; sourceTree = "<group>"; };
-		B79A437F155396C700F45E43 /* HSImageSidebarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HSImageSidebarView.m; path = Classes/HSImageSidebarView.m; sourceTree = "<group>"; };
-		B79A4380155396C700F45E43 /* HSImageSidebarViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HSImageSidebarViewDelegate.h; path = Classes/HSImageSidebarViewDelegate.h; sourceTree = "<group>"; };
+		B79A437E155396C700F45E43 /* HSImageSidebarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSImageSidebarView.h; sourceTree = "<group>"; };
+		B79A437F155396C700F45E43 /* HSImageSidebarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSImageSidebarView.m; sourceTree = "<group>"; };
+		B79A4380155396C700F45E43 /* HSImageSidebarViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; path = HSImageSidebarViewDelegate.h; sourceTree = "<group>"; };
 		B79A43841553984B00F45E43 /* BigLetterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BigLetterViewController.h; sourceTree = "<group>"; };
 		B79A43851553984B00F45E43 /* BigLetterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BigLetterViewController.m; sourceTree = "<group>"; };
 		B79A438715539ABD00F45E43 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -119,7 +119,7 @@
 				B79A437F155396C700F45E43 /* HSImageSidebarView.m */,
 				B79A4380155396C700F45E43 /* HSImageSidebarViewDelegate.h */,
 			);
-			name = HSImageSidebarView;
+			path = HSImageSidebarView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
