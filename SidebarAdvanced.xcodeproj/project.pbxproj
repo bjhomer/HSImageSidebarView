@@ -1,0 +1,311 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B79A435E1553964800F45E43 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B79A435D1553964800F45E43 /* UIKit.framework */; };
+		B79A43601553964800F45E43 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B79A435F1553964800F45E43 /* Foundation.framework */; };
+		B79A43621553964800F45E43 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B79A43611553964800F45E43 /* CoreGraphics.framework */; };
+		B79A43681553964900F45E43 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B79A43661553964900F45E43 /* InfoPlist.strings */; };
+		B79A436A1553964900F45E43 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B79A43691553964900F45E43 /* main.m */; };
+		B79A436E1553964900F45E43 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B79A436D1553964900F45E43 /* AppDelegate.m */; };
+		B79A43711553964900F45E43 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B79A436F1553964900F45E43 /* MainStoryboard.storyboard */; };
+		B79A43741553964900F45E43 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B79A43731553964900F45E43 /* RootViewController.m */; };
+		B79A4381155396C700F45E43 /* HSImageSidebarView.m in Sources */ = {isa = PBXBuildFile; fileRef = B79A437F155396C700F45E43 /* HSImageSidebarView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B79A43861553984B00F45E43 /* BigLetterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B79A43851553984B00F45E43 /* BigLetterViewController.m */; };
+		B79A438815539ABD00F45E43 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B79A438715539ABD00F45E43 /* QuartzCore.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		B79A43591553964800F45E43 /* SidebarAdvanced.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SidebarAdvanced.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B79A435D1553964800F45E43 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		B79A435F1553964800F45E43 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		B79A43611553964800F45E43 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		B79A43651553964900F45E43 /* SidebarAdvanced-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SidebarAdvanced-Info.plist"; sourceTree = "<group>"; };
+		B79A43671553964900F45E43 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B79A43691553964900F45E43 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		B79A436B1553964900F45E43 /* SidebarAdvanced-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SidebarAdvanced-Prefix.pch"; sourceTree = "<group>"; };
+		B79A436C1553964900F45E43 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		B79A436D1553964900F45E43 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		B79A43701553964900F45E43 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		B79A43721553964900F45E43 /* RootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		B79A43731553964900F45E43 /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		B79A437E155396C700F45E43 /* HSImageSidebarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HSImageSidebarView.h; path = Classes/HSImageSidebarView.h; sourceTree = "<group>"; };
+		B79A437F155396C700F45E43 /* HSImageSidebarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HSImageSidebarView.m; path = Classes/HSImageSidebarView.m; sourceTree = "<group>"; };
+		B79A4380155396C700F45E43 /* HSImageSidebarViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HSImageSidebarViewDelegate.h; path = Classes/HSImageSidebarViewDelegate.h; sourceTree = "<group>"; };
+		B79A43841553984B00F45E43 /* BigLetterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BigLetterViewController.h; sourceTree = "<group>"; };
+		B79A43851553984B00F45E43 /* BigLetterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BigLetterViewController.m; sourceTree = "<group>"; };
+		B79A438715539ABD00F45E43 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B79A43561553964800F45E43 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B79A438815539ABD00F45E43 /* QuartzCore.framework in Frameworks */,
+				B79A435E1553964800F45E43 /* UIKit.framework in Frameworks */,
+				B79A43601553964800F45E43 /* Foundation.framework in Frameworks */,
+				B79A43621553964800F45E43 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B79A434E1553964800F45E43 = {
+			isa = PBXGroup;
+			children = (
+				B79A4383155396CB00F45E43 /* HSImageSidebarView */,
+				B79A43631553964800F45E43 /* SidebarAdvanced */,
+				B79A435C1553964800F45E43 /* Frameworks */,
+				B79A435A1553964800F45E43 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B79A435A1553964800F45E43 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B79A43591553964800F45E43 /* SidebarAdvanced.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B79A435C1553964800F45E43 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B79A438715539ABD00F45E43 /* QuartzCore.framework */,
+				B79A435D1553964800F45E43 /* UIKit.framework */,
+				B79A435F1553964800F45E43 /* Foundation.framework */,
+				B79A43611553964800F45E43 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B79A43631553964800F45E43 /* SidebarAdvanced */ = {
+			isa = PBXGroup;
+			children = (
+				B79A436C1553964900F45E43 /* AppDelegate.h */,
+				B79A436D1553964900F45E43 /* AppDelegate.m */,
+				B79A436F1553964900F45E43 /* MainStoryboard.storyboard */,
+				B79A43721553964900F45E43 /* RootViewController.h */,
+				B79A43731553964900F45E43 /* RootViewController.m */,
+				B79A43841553984B00F45E43 /* BigLetterViewController.h */,
+				B79A43851553984B00F45E43 /* BigLetterViewController.m */,
+				B79A43641553964800F45E43 /* Supporting Files */,
+			);
+			path = SidebarAdvanced;
+			sourceTree = "<group>";
+		};
+		B79A43641553964800F45E43 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B79A43651553964900F45E43 /* SidebarAdvanced-Info.plist */,
+				B79A43661553964900F45E43 /* InfoPlist.strings */,
+				B79A43691553964900F45E43 /* main.m */,
+				B79A436B1553964900F45E43 /* SidebarAdvanced-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B79A4383155396CB00F45E43 /* HSImageSidebarView */ = {
+			isa = PBXGroup;
+			children = (
+				B79A437E155396C700F45E43 /* HSImageSidebarView.h */,
+				B79A437F155396C700F45E43 /* HSImageSidebarView.m */,
+				B79A4380155396C700F45E43 /* HSImageSidebarViewDelegate.h */,
+			);
+			name = HSImageSidebarView;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B79A43581553964800F45E43 /* SidebarAdvanced */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B79A43771553964900F45E43 /* Build configuration list for PBXNativeTarget "SidebarAdvanced" */;
+			buildPhases = (
+				B79A43551553964800F45E43 /* Sources */,
+				B79A43561553964800F45E43 /* Frameworks */,
+				B79A43571553964800F45E43 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SidebarAdvanced;
+			productName = SidebarAdvanced;
+			productReference = B79A43591553964800F45E43 /* SidebarAdvanced.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B79A43501553964800F45E43 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0430;
+				ORGANIZATIONNAME = Instructure;
+			};
+			buildConfigurationList = B79A43531553964800F45E43 /* Build configuration list for PBXProject "SidebarAdvanced" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = B79A434E1553964800F45E43;
+			productRefGroup = B79A435A1553964800F45E43 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B79A43581553964800F45E43 /* SidebarAdvanced */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B79A43571553964800F45E43 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B79A43681553964900F45E43 /* InfoPlist.strings in Resources */,
+				B79A43711553964900F45E43 /* MainStoryboard.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B79A43551553964800F45E43 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B79A436A1553964900F45E43 /* main.m in Sources */,
+				B79A436E1553964900F45E43 /* AppDelegate.m in Sources */,
+				B79A43741553964900F45E43 /* RootViewController.m in Sources */,
+				B79A4381155396C700F45E43 /* HSImageSidebarView.m in Sources */,
+				B79A43861553984B00F45E43 /* BigLetterViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		B79A43661553964900F45E43 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B79A43671553964900F45E43 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		B79A436F1553964900F45E43 /* MainStoryboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B79A43701553964900F45E43 /* en */,
+			);
+			name = MainStoryboard.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		B79A43751553964900F45E43 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		B79A43761553964900F45E43 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B79A43781553964900F45E43 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SidebarAdvanced/SidebarAdvanced-Prefix.pch";
+				INFOPLIST_FILE = "SidebarAdvanced/SidebarAdvanced-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		B79A43791553964900F45E43 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SidebarAdvanced/SidebarAdvanced-Prefix.pch";
+				INFOPLIST_FILE = "SidebarAdvanced/SidebarAdvanced-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B79A43531553964800F45E43 /* Build configuration list for PBXProject "SidebarAdvanced" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B79A43751553964900F45E43 /* Debug */,
+				B79A43761553964900F45E43 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B79A43771553964900F45E43 /* Build configuration list for PBXNativeTarget "SidebarAdvanced" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B79A43781553964900F45E43 /* Debug */,
+				B79A43791553964900F45E43 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B79A43501553964800F45E43 /* Project object */;
+}
