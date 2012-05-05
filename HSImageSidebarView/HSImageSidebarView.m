@@ -12,20 +12,20 @@
 
 @interface HSImageSidebarView () <UIScrollViewDelegate>
 
-@property (retain) UIScrollView *scrollView;
-@property (retain) CAGradientLayer *selectionGradient;
+@property (strong) UIScrollView *scrollView;
+@property (strong) CAGradientLayer *selectionGradient;
 
-@property (retain) NSMutableArray *imageViews;
-@property (retain) NSMutableArray *viewsForReuse;
-@property (retain) NSMutableIndexSet *indexesToAnimate;
+@property (strong) NSMutableArray *imageViews;
+@property (strong) NSMutableArray *viewsForReuse;
+@property (strong) NSMutableIndexSet *indexesToAnimate;
 @property (assign) BOOL shouldAnimateSelectionLayer;
 
 @property (assign) BOOL initialized;
 @property (assign) BOOL isHorizontal;
 
-@property (retain) NSTimer *dragScrollTimer;
+@property (strong) NSTimer *dragScrollTimer;
 
-@property (retain) UIView *viewBeingDragged;
+@property (strong) UIView *viewBeingDragged;
 @property (assign) NSInteger draggedViewOldIndex;
 @property (assign) CGPoint dragOffset;
 
@@ -79,15 +79,7 @@
 
 
 - (void)dealloc {
-	[_scrollView release];
-	[imageViews release];
-	[viewsForReuse release];
-	[indexesToAnimate release];
-	[viewBeingDragged release];
-	[selectionGradient release];
 	[dragScrollTimer invalidate];
-	[dragScrollTimer release];
-	[super dealloc];
 }
 
 #pragma mark -
@@ -95,7 +87,7 @@
 
 - (void) setupViewHierarchy {
 	
-	self.scrollView = [[[UIScrollView alloc] initWithFrame:self.bounds] autorelease];
+	self.scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
 	_scrollView.delegate = self;
 	if (self.bounds.size.width > self.bounds.size.height) {
 		isHorizontal = YES;
@@ -128,11 +120,9 @@
 	
 	UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedSidebar:)];
 	[self addGestureRecognizer:tapRecognizer];
-	[tapRecognizer release];
 	
 	UILongPressGestureRecognizer *pressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(pressedSidebar:)];
 	[self addGestureRecognizer:pressRecognizer];
-	[pressRecognizer release];
 }
 
 - (void) setupInstanceVariables {
@@ -178,7 +168,7 @@
 			
 			UIImageView *imageView = [self dequeueReusableImageView];
 			if (imageView == nil) {
-				imageView = [[[UIImageView alloc] init] autorelease];
+				imageView = [[UIImageView alloc] init];
 			}
 			imageView.image = image;
 			
@@ -221,7 +211,7 @@
 	if (selectedIndex >= 0) {
 		CFBooleanRef disableAnimations = shouldAnimateSelectionLayer ? kCFBooleanFalse : kCFBooleanTrue;
 		[CATransaction begin];
-		[CATransaction setValue:(id)disableAnimations
+		[CATransaction setValue:(__bridge id)disableAnimations
 						 forKey:kCATransactionDisableActions];
 		
 		selectionGradient.hidden = NO;
@@ -637,11 +627,11 @@
 }
 
 - (UIImageView *)dequeueReusableImageView {
-	UIImageView *view = [[viewsForReuse lastObject] retain];
+	UIImageView *view = [viewsForReuse lastObject];
 	if (view != nil) {
 		[viewsForReuse removeLastObject];
 	}
-	return [view autorelease];	
+	return view;	
 }
 
 - (CGRect)frameOfImageAtIndex:(NSUInteger)anIndex {

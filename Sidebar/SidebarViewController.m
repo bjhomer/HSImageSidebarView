@@ -9,7 +9,7 @@
 #import "SidebarViewController.h"
 
 @interface SidebarViewController ()
-@property (retain) UIPopoverController *popover;
+@property (strong) UIPopoverController *popover;
 @property (copy) void (^actionSheetBlock)(NSUInteger);
 
 @end
@@ -136,7 +136,6 @@
 		[sheet showFromRect:[sidebar frameOfImageAtIndex:anIndex]
 					 inView:sidebar
 				   animated:YES];
-		[sheet release];
 			
 	}
 }
@@ -144,10 +143,9 @@
 - (void)sidebar:(HSImageSidebarView *)sidebar didMoveImageAtIndex:(NSUInteger)oldIndex toIndex:(NSUInteger)newIndex {
 	NSLog(@"Image at index %d moved to index %d", oldIndex, newIndex);
 	
-	NSNumber *color = [[colors objectAtIndex:oldIndex] retain];
+	NSNumber *color = [colors objectAtIndex:oldIndex];
 	[colors removeObjectAtIndex:oldIndex];
 	[colors insertObject:color atIndex:newIndex];
-	[color release];
 }
 
 - (void)sidebar:(HSImageSidebarView *)sidebar didRemoveImageAtIndex:(NSUInteger)anIndex {
@@ -159,10 +157,4 @@
 	actionSheetBlock(buttonIndex);
 }
 
-- (void)dealloc {
-	[popover release];
-    [_sidebar release];
-	[colors release];
-    [super dealloc];
-}
 @end

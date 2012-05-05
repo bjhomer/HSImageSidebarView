@@ -14,9 +14,9 @@
 }
 
 @property (readonly) NSUInteger imageCount;
-@property (readonly) NSIndexSet *visibleIndices;
+@property (strong, readonly) NSIndexSet *visibleIndices;
 
-@property (assign) id<HSImageSidebarViewDelegate> delegate;
+@property (weak) id<HSImageSidebarViewDelegate> delegate;
 @property (assign) CGFloat rowHeight;
 @property (assign) NSInteger selectedIndex;
 

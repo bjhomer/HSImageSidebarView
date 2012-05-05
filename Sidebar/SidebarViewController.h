@@ -16,7 +16,7 @@
 	
 	NSMutableArray *colors;
 }
-@property (nonatomic, retain) IBOutlet HSImageSidebarView *sidebar;
+@property (nonatomic, strong) IBOutlet HSImageSidebarView *sidebar;
 
 - (IBAction)insertRow:(id)sender;
 - (IBAction)deleteSelection:(id)sender;
