@@ -445,7 +445,7 @@
             if([imageViews count] > 0){
                 [imageViews insertObject:viewBeingDragged atIndex:newIndex];
             } else {
-                [imageViews insertObject:viewBeingDragged atIndex:newIndex];
+                [imageViews insertObject:viewBeingDragged atIndex:0];
             }
             
 			[self setNeedsLayout];
