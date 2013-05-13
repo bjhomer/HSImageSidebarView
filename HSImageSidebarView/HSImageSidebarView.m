@@ -441,7 +441,13 @@
 		}
 		else {
 			[imageViews removeObject:viewBeingDragged];
-			[imageViews insertObject:viewBeingDragged atIndex:newIndex];
+            
+            if([imageViews count] > 0){
+                [imageViews insertObject:viewBeingDragged atIndex:newIndex];
+            } else {
+                [imageViews insertObject:viewBeingDragged atIndex:newIndex];
+            }
+            
 			[self setNeedsLayout];
 			
 			if ((isHorizontal && CGRectGetMaxX(_scrollView.bounds) - hitPoint.x < 50) ||
